@@ -316,12 +316,23 @@
   td { padding: 16px; border-bottom: 1px solid rgba(42,37,32,0.12); vertical-align: top; line-height: 1.5; }
   tbody tr:last-child td { border-bottom: none; }
   tbody tr:hover { background: rgba(200,52,28,0.04); }
-  td.vendor, td.tool, td.experiment, td.type-cell {
+  td.vendor, td.tool, td.type-cell {
     font-family: 'Fraunces', serif;
     font-weight: 700;
     font-size: 16px;
     letter-spacing: -0.01em;
     white-space: nowrap;
+  }
+
+  /* Experiment column wraps — content is too long to nowrap */
+  td.experiment {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: -0.01em;
+    white-space: normal;
+    min-width: 160px;
+    max-width: 260px;
   }
 
   /* ============ BADGES ============ */
@@ -425,7 +436,8 @@
     table { min-width: 560px; }
     th { padding: 10px 12px; font-size: 9px; }
     td { padding: 12px; font-size: 13px; }
-    td.vendor, td.tool, td.experiment, td.type-cell { font-size: 13px; white-space: normal; }
+    td.vendor, td.tool, td.type-cell { font-size: 13px; white-space: normal; }
+    td.experiment { font-size: 13px; max-width: 180px; }
     .insight { padding: 28px 20px; margin-top: 40px; }
     .insight::before { top: 14px; right: 16px; font-size: 9px; }
     .insight-headline { font-size: clamp(20px, 5.5vw, 28px); margin-bottom: 14px; }
