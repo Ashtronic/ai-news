@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The State of AI — ainews.mavenotics.com</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --ink: #1a1a1a; --accent: #c8341c; --paper: #f4efe6; --soft: #4a4540; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--paper); color: var(--ink); font-family: 'JetBrains Mono', monospace; min-height: 100vh; }
+    .wrap { max-width: 680px; margin: 0 auto; padding: 80px 32px; }
+    .label { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 16px; }
+    h1 { font-family: 'Fraunces', serif; font-size: 56px; font-weight: 900; line-height: 0.95; letter-spacing: -0.03em; margin-bottom: 8px; }
+    .sub { font-size: 13px; color: var(--soft); margin-bottom: 48px; letter-spacing: 0.06em; }
+    .divider { border: none; border-top: 1px solid var(--ink); margin-bottom: 32px; }
+    ul { list-style: none; }
+    li { border-bottom: 1px solid rgba(26,26,26,0.12); }
+    li a { display: block; padding: 16px 0; font-size: 13px; color: var(--ink); text-decoration: none; letter-spacing: 0.06em; transition: color 0.2s; }
+    li a:hover { color: var(--accent); }
+    li a::before { content: '→ '; color: var(--accent); }
+    .latest-btn { display: inline-block; margin-bottom: 40px; padding: 14px 28px; background: var(--ink); color: var(--paper); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; font-weight: 700; transition: background 0.2s; }
+    .latest-btn:hover { background: var(--accent); }
+    @media (max-width: 480px) { .wrap { padding: 48px 20px; } h1 { font-size: 40px; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <p class="label">◆ ainews.mavenotics.com</p>
+    <h1>The State<br>of AI.</h1>
+    <p class="sub">Daily builder briefs — weekdays, 6 AM AEST</p>
+    <a class="latest-btn" href="latest.html">Read Latest Issue →</a>
+    <hr class="divider">
+    <ul>{{ links }}</ul>
+  </div>
+</body>
+</html>
