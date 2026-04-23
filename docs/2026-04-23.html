@@ -316,12 +316,23 @@
   td { padding: 16px; border-bottom: 1px solid rgba(42,37,32,0.12); vertical-align: top; line-height: 1.5; }
   tbody tr:last-child td { border-bottom: none; }
   tbody tr:hover { background: rgba(200,52,28,0.04); }
-  td.vendor, td.tool, td.experiment, td.type-cell {
+  td.vendor, td.tool, td.type-cell {
     font-family: 'Fraunces', serif;
     font-weight: 700;
     font-size: 16px;
     letter-spacing: -0.01em;
     white-space: nowrap;
+  }
+
+  /* Experiment column wraps — content is too long to nowrap */
+  td.experiment {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: -0.01em;
+    white-space: normal;
+    min-width: 160px;
+    max-width: 260px;
   }
 
   /* ============ BADGES ============ */
@@ -425,7 +436,8 @@
     table { min-width: 560px; }
     th { padding: 10px 12px; font-size: 9px; }
     td { padding: 12px; font-size: 13px; }
-    td.vendor, td.tool, td.experiment, td.type-cell { font-size: 13px; white-space: normal; }
+    td.vendor, td.tool, td.type-cell { font-size: 13px; white-space: normal; }
+    td.experiment { font-size: 13px; max-width: 180px; }
     .insight { padding: 28px 20px; margin-top: 40px; }
     .insight::before { top: 14px; right: 16px; font-size: 9px; }
     .insight-headline { font-size: clamp(20px, 5.5vw, 28px); margin-bottom: 14px; }
@@ -463,13 +475,13 @@
     <h1>The State<br>of AI.</h1>
     <div class="title-meta">
       <strong>Thursday, 23 April 2026</strong>
-      6:46 PM AEST<br>
+      7:03 PM AEST<br>
       ainews.mavenotics.com<br>
       Anthropic · OpenAI · Google · Meta
     </div>
   </div>
 
-  <p class="title-timestamp">Thursday, 23 April 2026 — 6:46 PM AEST</p>
+  <p class="title-timestamp">Thursday, 23 April 2026 — 7:03 PM AEST</p>
 
   <p class="deck">
     A high-signal scan of model releases, API changes, and tooling shifts that actually affect what you build. No hype, no roadmap fluff — just what to use, what to watch, and what to skip.
@@ -521,86 +533,86 @@
           
           <tr>
             <td class="vendor">OpenAI</td>
-            <td>Workspace agents in ChatGPT: Codex-powered cloud agents that automate complex workflows and connect to team tools</td>
-            <td><span class="badge badge-cat">Agentic AI</span></td>
-            <td>Enables non-engineers to deploy agents without custom infra; reduces barrier to internal automation</td>
+            <td>Workspace agents in ChatGPT powered by Codex automate complex cloud-based workflows and connect to team tools</td>
+            <td><span class="badge badge-cat">Agents</span></td>
+            <td>Enables no-code agent deployment for enterprise teams without custom infrastructure</td>
             <td>
               <span class="badge badge-use">Use Now</span>
               
             </td>
-            <td>First-party, cloud-hosted, Codex-backed agents with tool integrations — directly competes with custom LangChain/n8n setups at lower build cost</td>
+            <td>Production-ready, Codex-backed, cloud-hosted agents with tool integrations reduce time-to-deploy for workflow automation significantly</td>
           </tr>
           
           <tr>
             <td class="vendor">OpenAI</td>
-            <td>WebSockets + connection-scoped caching added to Responses API for agentic loops</td>
+            <td>WebSockets added to Responses API with connection-scoped caching to reduce latency in agentic loops</td>
             <td><span class="badge badge-cat">API Infrastructure</span></td>
-            <td>Materially reduces latency and token overhead in multi-turn agent workflows</td>
+            <td>Directly cuts round-trip overhead in multi-step agent workflows; critical for real-time agent products</td>
             <td>
               <span class="badge badge-use">Use Now</span>
               
             </td>
-            <td>If you're running Codex or any OpenAI agent loop in production, switching to WebSocket transport is a direct performance and cost win</td>
+            <td>If you are building agentic pipelines on the Responses API, switching to WebSockets is a concrete latency and cost win today</td>
           </tr>
           
           <tr>
             <td class="vendor">OpenAI</td>
-            <td>OpenAI Privacy Filter: open-weight PII detection and redaction model released</td>
-            <td><span class="badge badge-cat">Data Privacy / Compliance</span></td>
-            <td>Drop-in PII scrubbing layer for pipelines handling sensitive user or enterprise data</td>
+            <td>OpenAI Privacy Filter released as open-weight model for PII detection and redaction in text</td>
+            <td><span class="badge badge-cat">Privacy / Compliance</span></td>
+            <td>Removes a major blocker for processing sensitive data in AI pipelines without sending PII to third-party APIs</td>
             <td>
               <span class="badge badge-use">Use Now</span>
               
             </td>
-            <td>Open-weight means you can run it on-prem or in your VPC — critical for healthcare, legal, and fintech products where PII cannot leave your environment</td>
+            <td>Open-weight means you can self-host for healthcare, legal, or finance use cases with no data leaving your environment</td>
           </tr>
           
           <tr>
             <td class="vendor">OpenAI</td>
-            <td>ChatGPT for Clinicians now free for verified U.S. physicians, NPs, and pharmacists</td>
-            <td><span class="badge badge-cat">Vertical AI / Healthcare</span></td>
-            <td>Accelerates clinical AI adoption; sets a competitive floor for healthtech builders</td>
+            <td>ChatGPT for Clinicians made free for verified U.S. physicians, nurse practitioners, and pharmacists</td>
+            <td><span class="badge badge-cat">Vertical AI</span></td>
+            <td>Creates a distribution channel and trust signal for clinical AI tooling; raises the bar for competing health AI products</td>
             <td>
               <span class="badge badge-watch">Watch</span>
               
             </td>
-            <td>If you're building clinical documentation or decision-support tools, OpenAI is now a direct distribution competitor — differentiate on workflow depth, not model access</td>
+            <td>If you are building health AI, OpenAI is now a direct competitor with a free, verified-user funnel in the U.S. market</td>
           </tr>
           
           <tr>
             <td class="vendor">OpenAI</td>
-            <td>ChatGPT Images 2.0: improved text rendering, multilingual support, advanced visual reasoning</td>
+            <td>ChatGPT Images 2.0 launches with improved text rendering, multilingual support, and visual reasoning</td>
             <td><span class="badge badge-cat">Image Generation</span></td>
-            <td>Text-in-image reliability jumps significantly — unblocks product use cases like social graphics, localized marketing assets, UI mockups</td>
+            <td>Text-in-image accuracy was the primary failure mode for product mockups and marketing assets; this closes that gap</td>
             <td>
               <span class="badge badge-use">Use Now</span>
               
             </td>
-            <td>Text rendering in images has been the persistent failure mode; if your product generates visual content with labels or copy, test this immediately</td>
+            <td>Reliable text rendering unlocks image generation for UI mockups, localized ad creatives, and document thumbnails</td>
           </tr>
           
           <tr>
             <td class="vendor">Google</td>
-            <td>Two new specialized TPUs (Gen 8) announced for agentic workloads</td>
-            <td><span class="badge badge-cat">AI Infrastructure</span></td>
-            <td>Google Cloud inference costs and latency for Gemini-based agents will drop over coming quarters</td>
+            <td>Two new specialized TPU chips (8th gen) launched targeting the agentic AI era</td>
+            <td><span class="badge badge-cat">Infrastructure</span></td>
+            <td>Lower inference cost and higher throughput for Gemini-based workloads on Google Cloud</td>
             <td>
               <span class="badge badge-watch">Watch</span>
               
             </td>
-            <td>No immediate API change, but signals Google is investing infrastructure specifically for agent-scale inference — relevant for teams evaluating Gemini vs OpenAI long-term</td>
+            <td>Relevant if you run high-volume Gemini API workloads; wait for pricing and availability details before migrating</td>
           </tr>
           
           <tr>
             <td class="vendor">Google</td>
-            <td>Gemini 3.1 Flash TTS: next-generation expressive speech synthesis</td>
-            <td><span class="badge badge-cat">Voice / TTS</span></td>
-            <td>New expressiveness benchmark for voice interfaces; directly competes with ElevenLabs and OpenAI TTS</td>
+            <td>AI Mode launched in Chrome for web exploration with AI assistance</td>
+            <td><span class="badge badge-cat">Browser AI</span></td>
+            <td>Changes how users discover and interact with web content; affects SEO and product discoverability strategies</td>
             <td>
               <span class="badge badge-watch">Watch</span>
               
             </td>
-            <td>If voice is in your product roadmap, benchmark Gemini 3.1 Flash TTS against your current provider before committing to a long-term voice stack</td>
+            <td>Products relying on organic web traffic should monitor how AI Mode surfaces or summarizes their content</td>
           </tr>
           
         </tbody>
@@ -624,23 +636,23 @@
           
           <tr>
             <td class="vendor">OpenAI Privacy Filter (open-weight)</td>
-            <td><span class="badge badge-cat">Data Privacy</span></td>
-            <td>Open-weight PII model you can self-host means compliance-sensitive teams get state-of-the-art redaction without sending data to a third-party API — a gap that previously required expensive enterprise contracts or brittle regex pipelines</td>
-            <td>Any pipeline ingesting user-generated content, clinical notes, legal documents, or HR data before passing to an LLM</td>
-          </tr>
-          
-          <tr>
-            <td class="vendor">OpenAI Responses API with WebSockets</td>
-            <td><span class="badge badge-cat">Agentic Infrastructure</span></td>
-            <td>Connection-scoped caching + WebSocket transport cuts round-trip overhead in agent loops — this is the right low-level primitive for high-frequency tool-calling agents</td>
-            <td>Production agents with 5+ tool calls per session or latency-sensitive copilot experiences</td>
+            <td><span class="badge badge-cat">Privacy / Compliance</span></td>
+            <td>State-of-the-art PII detection as a self-hostable model is a rare combination; eliminates the compliance vs. capability tradeoff in sensitive data pipelines</td>
+            <td>Any pipeline ingesting user-generated text in regulated industries or where GDPR/HIPAA compliance requires PII scrubbing before model processing</td>
           </tr>
           
           <tr>
             <td class="vendor">ChatGPT Workspace Agents</td>
-            <td><span class="badge badge-cat">Workflow Automation</span></td>
-            <td>Codex-backed agents that run in the cloud and connect to team tools without custom orchestration code — lowers the build cost of internal automation dramatically</td>
-            <td>Internal tools teams needing to automate repetitive workflows without standing up LangGraph or custom agent infra</td>
+            <td><span class="badge badge-cat">Agents</span></td>
+            <td>Cloud-hosted, Codex-powered agents with native tool connections and no self-managed infrastructure; fastest path to deploying repeatable workflow automation for enterprise teams</td>
+            <td>Internal ops automation, document processing pipelines, or team-facing tools where you want agent capability without building an orchestration layer</td>
+          </tr>
+          
+          <tr>
+            <td class="vendor">Responses API with WebSockets</td>
+            <td><span class="badge badge-cat">API Infrastructure</span></td>
+            <td>Connection-scoped caching paired with persistent WebSocket connections materially reduces latency in multi-turn or multi-step agent loops</td>
+            <td>Real-time agentic applications, coding assistants, or any product where the agent makes sequential API calls and user-perceived latency matters</td>
           </tr>
           
         </tbody>
@@ -663,22 +675,22 @@
         <tbody>
           
           <tr>
-            <td class="experiment">Swap your current PII masking step with OpenAI's open-weight Privacy Filter in a staging pipeline</td>
-            <td>Measure precision/recall against your existing solution and assess self-hosting feasibility</td>
+            <td class="experiment">Integrate OpenAI Privacy Filter as a pre-processing step before any LLM call that handles user-submitted text</td>
+            <td>Establish a PII firewall in your AI pipeline using a self-hosted open-weight model, enabling compliant processing of sensitive inputs</td>
             <td>
               <span class="badge badge-medium">Medium</span>
             </td>
-            <td>Higher PII detection accuracy with a self-hostable model, reducing compliance risk and eliminating dependency on a cloud API for sensitive data preprocessing</td>
+            <td>Automated PII redaction with measurable reduction in compliance risk; reusable component across all data ingestion endpoints</td>
           </tr>
           
           <tr>
-            <td class="experiment">Migrate an existing OpenAI agent loop to use WebSocket transport in the Responses API with connection-scoped caching enabled</td>
-            <td>Quantify latency reduction and token cost savings on a real agent workflow</td>
+            <td class="experiment">Migrate one existing polling-based Responses API agent loop to WebSockets with connection-scoped caching</td>
+            <td>Measure latency reduction and token cost delta on a real agentic workflow</td>
             <td>
               <span class="badge badge-low">Low</span>
               
             </td>
-            <td>10-40% reduction in perceived response latency for multi-turn agent sessions and measurable decrease in redundant token processing overhead</td>
+            <td>Quantified latency improvement and potential cost savings from caching; validates whether full migration is warranted</td>
           </tr>
           
         </tbody>
@@ -708,7 +720,7 @@
             </td>
             <td class="vendor">OpenAI Privacy Filter</td>
             <td>New open-weight PII detection and redaction model released</td>
-            <td>Self-hostable; designed for pipeline integration before LLM calls</td>
+            <td>Self-hostable; designed for production text pipelines requiring PII scrubbing</td>
           </tr>
           
           <tr>
@@ -717,8 +729,8 @@
               
             </td>
             <td class="vendor">ChatGPT Workspace Agents</td>
-            <td>Codex-powered cloud agents for workflow automation launched in ChatGPT</td>
-            <td>Targets team operations; connects to external tools; no custom orchestration required</td>
+            <td>New Codex-powered cloud-hosted agents for workflow automation within ChatGPT</td>
+            <td>Connects to external tools; targets enterprise teams; no custom orchestration required</td>
           </tr>
           
           <tr>
@@ -727,8 +739,8 @@
               
             </td>
             <td class="vendor">OpenAI Responses API</td>
-            <td>WebSocket support and connection-scoped caching added for agentic loops</td>
-            <td>Reduces API overhead and model latency for multi-turn agent sessions</td>
+            <td>WebSockets support added with connection-scoped caching</td>
+            <td>Reduces API overhead in agentic loops; replaces polling pattern for real-time use cases</td>
           </tr>
           
           <tr>
@@ -737,8 +749,8 @@
               
             </td>
             <td class="vendor">ChatGPT Images</td>
-            <td>Images 2.0 released with improved text rendering, multilingual support, visual reasoning</td>
-            <td>Previous text-in-image failures largely resolved; test for content generation use cases</td>
+            <td>Version 2.0 with improved text rendering, multilingual support, and visual reasoning</td>
+            <td>Text-in-image was the key prior limitation; now viable for localized marketing and UI asset generation</td>
           </tr>
           
           <tr>
@@ -746,9 +758,19 @@
               <span class="badge badge-updated">Updated</span>
               
             </td>
-            <td class="vendor">Gemini TTS</td>
-            <td>Gemini 3.1 Flash TTS released with next-generation expressiveness</td>
-            <td>Benchmark against ElevenLabs and OpenAI TTS before voice stack decisions</td>
+            <td class="vendor">ChatGPT for Clinicians</td>
+            <td>Now free for verified U.S. physicians, nurse practitioners, and pharmacists</td>
+            <td>Verified user gate adds trust signal; direct competitive pressure on clinical AI startups</td>
+          </tr>
+          
+          <tr>
+            <td>
+              <span class="badge badge-added">Added</span>
+              
+            </td>
+            <td class="vendor">Google TPU 8th Gen (two variants)</td>
+            <td>Two specialized chips launched for agentic AI workloads</td>
+            <td>Targets high-throughput Gemini inference; pricing and availability details pending</td>
           </tr>
           
         </tbody>
@@ -759,12 +781,12 @@
 
   <!-- INSIGHT -->
   <div class="insight" id="insight">
-    <p class="insight-headline">OpenAI is collapsing the stack: privacy, agents, infra, and image gen all ship in one cycle</p>
-    <p class="insight-body">Today's releases reveal a deliberate pattern: OpenAI is removing the reasons to build outside their platform. Open-weight PII filtering eliminates the compliance objection to using OpenAI APIs. Workspace agents eliminate the need for custom orchestration frameworks. WebSocket caching eliminates the latency objection for production agents. Images 2.0 eliminates the text-rendering blocker for content products. Each release individually looks like a feature update — together they form a platform moat. Builders should audit which parts of their stack they built as workarounds to OpenAI limitations, because those workarounds are now being systematically closed.</p>
+    <p class="insight-headline">OpenAI is collapsing the stack: infrastructure, compliance, and vertical distribution shipped in a single day</p>
+    <p class="insight-body">Today's releases reveal a deliberate pattern: OpenAI is removing every reason to build off-platform. WebSockets cut the infrastructure argument, the Privacy Filter removes the compliance objection, Workspace Agents eliminate the orchestration build, and the free clinician tier owns a vertical distribution channel. Builders evaluating whether to use OpenAI APIs versus assembling best-of-breed tooling now face a higher switching cost than yesterday. The open-weight Privacy Filter is the sharpest move—it signals OpenAI is willing to give away compliance tooling to keep you inside the ecosystem for everything else.</p>
   </div>
 
   <footer>
-    <div>Sources: anthropic.com · openai.com · blog.google · ai.meta.com — Generated Thursday, 23 April 2026, 6:46 PM AEST</div>
+    <div>Sources: anthropic.com · openai.com · blog.google · ai.meta.com — Generated Thursday, 23 April 2026, 7:03 PM AEST</div>
   </footer>
 
 </div>
