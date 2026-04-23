@@ -2,7 +2,7 @@ name: Generate AI Brief
 
 on:
   schedule:
-    - cron: '0 9 * * 1-5'
+    - cron: '0 20 * * 1-5'
   workflow_dispatch:
 
 permissions:
