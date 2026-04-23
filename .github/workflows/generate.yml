@@ -2,11 +2,13 @@ name: Generate AI Brief
 
 on:
   schedule:
-    - cron: '0 20 * * 1-5'  # 6 AM AEST weekdays
-  workflow_dispatch:          # allows manual trigger
+    - cron: '0 20 * * 1-5'
+  workflow_dispatch:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 jobs:
   generate:
@@ -26,7 +28,6 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: python src/generate.py
-        working-directory: ${{ github.workspace }}
 
       - name: Commit and push
         run: |
@@ -35,3 +36,26 @@ jobs:
           git add docs/
           git commit -m "Brief: $(date +'%Y-%m-%d')" || exit 0
           git push
+
+  deploy:
+    needs: generate
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload docs folder
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './docs'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
