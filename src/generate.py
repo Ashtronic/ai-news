@@ -116,7 +116,8 @@ def generate_brief(headlines):
 
 # ── Step 3: Render HTML ──────────────────────────────────
 def render_html(data):
-    template_src = Path("templates/brief.html").read_text()
+    base = Path(__file__).parent.parent
+    template_src = (base / "templates/brief.html").read_text()
     tmpl = Template(template_src)
     return tmpl.render(
         data=data,
@@ -145,7 +146,8 @@ def build_index(issues):
         links.append('<li><a href="' + f.name + '">' + label + '</a></li>')
     links_html = "\n".join(links)
 
-    index = Path("templates/index.html").read_text()
+    base = Path(__file__).parent.parent
+    index = (base / "templates/index.html").read_text()
     return index.replace("{{ links }}", links_html)
 
 # ── Main ─────────────────────────────────────────────────
