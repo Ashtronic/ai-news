@@ -1,0 +1,4 @@
+anthropic
+feedparser
+jinja2
+pytz
