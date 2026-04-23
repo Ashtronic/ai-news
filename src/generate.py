@@ -47,61 +47,59 @@ def generate_brief(headlines):
         for h in headlines
     ])
 
-    prompt = f"""You are an AI product advisor helping software engineers build AI products.
-Today is {date_human}.
-
-Based on these recent AI headlines from the last 24 hours:
-
-{headlines_text}
-
-Generate an AI Builder Brief as strict JSON with these exact keys:
-{{
-  "key_updates": [
-    {{
-      "vendor": "",
-      "change": "",
-      "category": "",
-      "impact": "",
-      "decision": "Use Now|Watch|Ignore",
-      "why": ""
-    }}
-  ],
-  "top_picks": [
-    {{
-      "tool": "",
-      "category": "",
-      "why_it_stands_out": "",
-      "when_to_use": ""
-    }}
-  ],
-  "try_this": [
-    {{
-      "experiment": "",
-      "goal": "",
-      "effort": "Low|Medium",
-      "expected_outcome": ""
-    }}
-  ],
-  "tool_map": [
-    {{
-      "type": "Added|Updated|Deprecated",
-      "item": "",
-      "change": "",
-      "notes": ""
-    }}
-  ],
-  "insight_headline": "",
-  "insight_body": ""
-}}
-
-Rules:
-- key_updates: 5-8 rows, high signal only, ignore hype
-- top_picks: max 3 rows
-- try_this: max 2 rows
-- tool_map: only include if real tool changes exist today
-- insight: one sharp pattern observation across today's news
-- Be concise and opinionated, avoid generic statements
-- Return ONLY valid JSON, no other text, no markdown fences"""
+    prompt = (
+        f"You are an AI product advisor helping software engineers build AI products.\n"
+        f"Today is {date_human}.\n\n"
+        f"Based on these recent AI headlines from the last 24 hours:\n\n"
+        f"{headlines_text}\n\n"
+        f"Generate an AI Builder Brief as strict JSON with these exact keys:\n"
+        '{\n'
+        '  "key_updates": [\n'
+        '    {\n'
+        '      "vendor": "",\n'
+        '      "change": "",\n'
+        '      "category": "",\n'
+        '      "impact": "",\n'
+        '      "decision": "Use Now|Watch|Ignore",\n'
+        '      "why": ""\n'
+        '    }\n'
+        '  ],\n'
+        '  "top_picks": [\n'
+        '    {\n'
+        '      "tool": "",\n'
+        '      "category": "",\n'
+        '      "why_it_stands_out": "",\n'
+        '      "when_to_use": ""\n'
+        '    }\n'
+        '  ],\n'
+        '  "try_this": [\n'
+        '    {\n'
+        '      "experiment": "",\n'
+        '      "goal": "",\n'
+        '      "effort": "Low|Medium",\n'
+        '      "expected_outcome": ""\n'
+        '    }\n'
+        '  ],\n'
+        '  "tool_map": [\n'
+        '    {\n'
+        '      "type": "Added|Updated|Deprecated",\n'
+        '      "item": "",\n'
+        '      "change": "",\n'
+        '      "notes": ""\n'
+        '    }\n'
+        '  ],\n'
+        '  "insight_headline": "",\n'
+        '  "insight_body": ""\n'
+        '}\n\n'
+        "Rules:\n"
+        "- key_updates: 5-8 rows, high signal only, ignore hype\n"
+        "- top_picks: max 3 rows\n"
+        "- try_this: max 2 rows\n"
+        "- tool_map: only include if real tool changes exist today\n"
+        "- insight: one sharp pattern observation across today's news\n"
+        "- Be concise and opinionated, avoid generic statements\n"
+        "- Return ONLY valid JSON, no other text, no markdown fences"
+    )
 
     message = client.messages.create(
         model="claude-sonnet-4-6",
@@ -138,16 +136,25 @@ def save_files(html):
     print(f"Saved docs/{date_slug}.html")
 
 def build_index(issues):
-    links = "\n".join([
-        f'<li><a href="{f.name}">'
-        f'{datetime.strptime(f.stem, "%Y-%m-%d").strftime("%A, %-d %B %Y")}'
-        f'</a></li>'
-        for f in issues
-    ])
-    return f"""<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The State of AI — ainews.mavenotics.com</title>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,900&family=JetBrains
+    links = []
+    for f in issues:
+        try:
+            label = datetime.strptime(f.stem, "%Y-%m-%d").strftime("%A, %-d %B %Y")
+        except ValueError:
+            label = f.stem
+        links.append('<li><a href="' + f.name + '">' + label + '</a></li>')
+    links_html = "\n".join(links)
+
+    index = Path("templates/index.html").read_text()
+    return index.replace("{{ links }}", links_html)
+
+# ── Main ─────────────────────────────────────────────────
+if __name__ == "__main__":
+    print(f"Starting brief for {date_human}...")
+    headlines = fetch_headlines()
+    print(f"Got {len(headlines)} headlines")
+    data = generate_brief(headlines)
+    print("Brief generated")
+    html = render_html(data)
+    save_files(html)
+    print("Done.")
