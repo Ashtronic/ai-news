@@ -1,0 +1,36 @@
+name: Generate AI Brief
+
+on:
+  schedule:
+    - cron: '0 20 * * 1-5'  # 6 AM AEST weekdays
+  workflow_dispatch:          # allows manual trigger
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Generate brief
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python src/generate.py
+
+      - name: Commit and push
+        run: |
+          git config user.name "AI Brief Bot"
+          git config user.email "bot@mavenotics.com"
+          git add docs/
+          git commit -m "Brief: $(date +'%Y-%m-%d')" || exit 0
+          git push
