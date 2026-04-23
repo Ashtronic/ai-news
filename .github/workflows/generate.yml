@@ -26,6 +26,7 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: python src/generate.py
+        working-directory: ${{ github.workspace }}
 
       - name: Commit and push
         run: |
