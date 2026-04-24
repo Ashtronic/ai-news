@@ -20,7 +20,7 @@ now        = datetime.now(AEST)
 date_human = now.strftime("%A, %-d %B %Y")
 time_human = now.strftime("%-I:%M %p %Z")
 date_slug  = now.strftime("%Y-%m-%d")
-is_monday  = True # now.weekday() == 0
+is_monday  = now.weekday() == 0
 
 # ── Step 1: Fetch RSS ────────────────────────────────────
 def fetch_headlines():
