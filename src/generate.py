@@ -298,7 +298,7 @@ def save_files(brief_html, tools_html=None, tools_data=None,
         )
         print(f"Saved docs/tools.html + docs/tools-{date_slug}.json")
 
-    if changelog_html and changelog_data:
+    if changelog_html:
         (docs / "changelog.html").write_text(changelog_html)
         # Append to changelog history JSON
         history_file = docs / "changelog-history.json"
@@ -352,23 +352,27 @@ if __name__ == "__main__":
         print("Loading previous snapshot for diff...")
         previous_data, previous_date = load_previous_tools()
 
+        docs = Path(__file__).parent.parent / "docs"
+        history_file = docs / "changelog-history.json"
+        all_changelogs = []
+        if history_file.exists():
+            all_changelogs = json.loads(history_file.read_text())
+
         if previous_data:
             print(f"Comparing with snapshot from {previous_date}...")
             changelog_data = generate_changelog(
                 tools_data, previous_data, previous_date
             )
             print("Changelog generated")
-
-            # Load full history for the changelog page
-            docs = Path(__file__).parent.parent / "docs"
-            history_file = docs / "changelog-history.json"
-            all_changelogs = []
-            if history_file.exists():
-                all_changelogs = json.loads(history_file.read_text())
-
-            changelog_html = render_changelog(changelog_data, all_changelogs)
         else:
-            print("No previous snapshot found — skipping changelog this week")
+            print("No previous snapshot — generating first-run changelog page...")
+            changelog_data = {
+                "summary": "This is the first snapshot of the AI tools landscape. Check back next Monday for the first weekly diff.",
+                "changes": [],
+                "trend_observation": "Baseline established. Trends will appear from next Monday onwards."
+            }
+
+        changelog_html = render_changelog(changelog_data, all_changelogs)
 
     save_files(brief_html, tools_html, tools_data, changelog_html, changelog_data)
     print("Done.")
