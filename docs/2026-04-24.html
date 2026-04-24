@@ -474,21 +474,21 @@
   </div>
 
   <blockquote class="epigraph">
-    <p>"The question of whether a computer can think is no more interesting than the question of whether a submarine can swim."</p>
-    <cite>— Edsger W. Dijkstra<span>, <span>The Threats to Computing Science, 1984 ACM South Central Regional Conference</span></span></cite>
+    <p>"The real danger is not that computers will begin to think like men, but that men will begin to think like computers."</p>
+    <cite>— Sydney J. Harris<span>, <span>Clearing the Ground, 1986</span></span></cite>
   </blockquote>
 
   <div class="title-block">
     <h1>The State<br>of AI.</h1>
     <div class="title-meta">
       <strong>Friday, 24 April 2026</strong>
-      2:00 PM AEST<br>
+      2:23 PM AEST<br>
       ainews.mavenotics.com<br>
       Anthropic · OpenAI · Google · Meta
     </div>
   </div>
 
-  <p class="title-timestamp">Friday, 24 April 2026 — 2:00 PM AEST</p>
+  <p class="title-timestamp">Friday, 24 April 2026 — 2:23 PM AEST</p>
 
   <p class="deck">
     A high-signal scan of model releases, API changes, and tooling shifts that actually affect what you build. No hype, no roadmap fluff — just what to use, what to watch, and what to skip.
@@ -543,74 +543,74 @@
           
           <tr>
             <td class="vendor">OpenAI</td>
-            <td>GPT-5.5 released as flagship model targeting coding, research, and data analysis workloads</td>
+            <td>GPT-5.5 released, positioned as faster and more capable than GPT-5 for coding, research, and data analysis</td>
             <td><span class="badge badge-cat">Foundation Model</span></td>
-            <td>Immediate upgrade path for production apps using GPT-4o or GPT-5; higher capability ceiling for agentic and multi-step reasoning tasks</td>
+            <td>Immediate uplift for agentic coding and analytical pipelines; evaluate whether GPT-5.5 closes latency gaps that made GPT-5 impractical for real-time use cases</td>
             <td>
               <span class="badge badge-use">Use Now</span>
               
             </td>
-            <td>If your product relies on complex reasoning, code generation, or data pipelines, GPT-5.5 is the new baseline to benchmark against—don't wait</td>
+            <td>If you are running GPT-4o or GPT-5 in production for code generation or data tasks, benchmark GPT-5.5 now — the speed improvement alone may justify migration</td>
           </tr>
           
           <tr>
             <td class="vendor">OpenAI</td>
-            <td>Codex now supports scheduled automations and trigger-based workflows for recurring tasks</td>
-            <td><span class="badge badge-cat">Workflow Automation</span></td>
-            <td>Removes the need for external orchestration glue (e.g., cron + custom scripts) for report generation and recurring AI tasks inside Codex</td>
+            <td>Codex now supports Automations — scheduled triggers for reports, summaries, and recurring workflows without manual invocation</td>
+            <td><span class="badge badge-cat">Agentic Workflow</span></td>
+            <td>Codex shifts from reactive assistant to autonomous scheduled agent, reducing the need for custom orchestration layers</td>
             <td>
               <span class="badge badge-use">Use Now</span>
               
             </td>
-            <td>Directly competes with Zapier/Make for AI-native automation; if you're already in the OpenAI ecosystem, consolidating here reduces stack complexity</td>
+            <td>Teams building cron-style AI workflows on top of Lambda or Airflow should evaluate Codex Automations as a first-party replacement that removes infrastructure overhead</td>
           </tr>
           
           <tr>
             <td class="vendor">OpenAI</td>
-            <td>Codex launches plugins and skills system for tool connections and repeatable workflow patterns</td>
-            <td><span class="badge badge-cat">Agent Tooling</span></td>
-            <td>Enables composable, reusable agent behaviors without rebuilding logic per project; reduces prompt engineering overhead for recurring task types</td>
+            <td>Codex Plugins and Skills released — connectors for external tools, data sources, and repeatable workflow templates</td>
+            <td><span class="badge badge-cat">Integrations / Tooling</span></td>
+            <td>Extends Codex from a code assistant into a composable automation platform; reduces prompt engineering overhead for repeated tasks</td>
             <td>
               <span class="badge badge-watch">Watch</span>
               
             </td>
-            <td>Promising but ecosystem maturity of plugins is unknown—evaluate available integrations before committing architectural decisions to this layer</td>
+            <td>Ecosystem maturity is unknown — worth piloting for internal tooling but not yet a safe bet for customer-facing production integrations</td>
           </tr>
           
           <tr>
             <td class="vendor">Google</td>
-            <td>Two new eighth-generation TPU variants announced, specialized for agentic AI workloads</td>
-            <td><span class="badge badge-cat">Infrastructure</span></td>
-            <td>Signals Google's infra roadmap is explicitly optimized for long-running agentic tasks, not just inference throughput—relevant for teams choosing cloud provider</td>
+            <td>Two new eighth-generation TPU variants launched specifically for agentic AI workloads</td>
+            <td><span class="badge badge-cat">Infrastructure / Compute</span></td>
+            <td>Signals that agentic inference patterns (long context, multi-step reasoning) require dedicated silicon — latency and cost profiles will shift for Vertex AI users</td>
             <td>
               <span class="badge badge-watch">Watch</span>
               
             </td>
-            <td>Hardware specialization for agents could lower cost and latency for GCP-hosted agentic workloads; worth tracking pricing and availability before switching</td>
+            <td>If your product runs on Google Cloud AI infrastructure, track TPU availability and benchmark against current GPU-based deployments within the next quarter</td>
           </tr>
           
           <tr>
             <td class="vendor">Google</td>
-            <td>AI Mode launched in Chrome as a new web exploration interface</td>
-            <td><span class="badge badge-cat">Consumer AI Surface</span></td>
-            <td>Potential shift in how users discover and interact with web content; SEO and discoverability strategies for AI products may need revisiting</td>
+            <td>AI Mode launched in Chrome for web exploration</td>
+            <td><span class="badge badge-cat">Consumer AI / Browser</span></td>
+            <td>Search and browse behavior shifts; products relying on referral traffic or SEO-driven discovery need to monitor click-through changes</td>
             <td>
               <span class="badge badge-watch">Watch</span>
               
             </td>
-            <td>If your product depends on organic web traffic or browser-based user journeys, monitor how Chrome's AI Mode affects click-through and session patterns</td>
+            <td>Not an immediate builder action, but if your product depends on organic web traffic, AI Mode in Chrome is a structural threat to monitor over the next 6 months</td>
           </tr>
           
           <tr>
             <td class="vendor">Google</td>
-            <td>First Austrian data center announced, expanding European AI infrastructure footprint</td>
-            <td><span class="badge badge-cat">Infrastructure / Compliance</span></td>
-            <td>Adds EU data residency option in Austria; relevant for European customers with GDPR data sovereignty requirements on GCP</td>
+            <td>New data center investment in Austria, expanded TPU infrastructure</td>
+            <td><span class="badge badge-cat">Infrastructure / Capacity</span></td>
+            <td>EU-based AI deployments gain more Google Cloud capacity, improving latency and data residency options for GDPR-constrained products</td>
             <td>
               <span class="badge badge-watch">Watch</span>
               
             </td>
-            <td>Only actionable if you have European enterprise customers demanding in-region processing; otherwise background noise</td>
+            <td>If you are building for European enterprise customers with data sovereignty requirements, this expands your viable infrastructure options on GCP</td>
           </tr>
           
         </tbody>
@@ -635,22 +635,22 @@
           <tr>
             <td class="vendor">GPT-5.5</td>
             <td><span class="badge badge-cat">Foundation Model</span></td>
-            <td>Described as faster and more capable than predecessors with explicit optimization for coding and data analysis—the two highest-value developer use cases. Speed improvements matter more than raw intelligence for production latency budgets.</td>
-            <td>Any new or existing feature requiring multi-step reasoning, code generation, or structured data extraction. Benchmark it immediately against your current model before your next sprint.</td>
+            <td>Combines speed improvements with capability gains — the combination matters more than either metric alone for production agentic systems where latency and reasoning depth are both bottlenecks</td>
+            <td>Complex multi-step coding assistants, automated research pipelines, data analysis agents where GPT-4o was too shallow and GPT-5 too slow</td>
           </tr>
           
           <tr>
             <td class="vendor">Codex Automations</td>
-            <td><span class="badge badge-cat">Workflow Automation</span></td>
-            <td>Native scheduling and triggers inside Codex eliminate the orchestration layer many teams bolt on externally. Fewer moving parts means fewer failure points in production AI workflows.</td>
-            <td>Recurring report generation, scheduled summarization jobs, or any workflow that currently requires a cron job plus an LLM API call chained together.</td>
+            <td><span class="badge badge-cat">Agentic Workflow</span></td>
+            <td>First-party scheduled agentic execution from OpenAI removes the need to wrap Codex in external orchestration tools for recurring tasks</td>
+            <td>Any team running scheduled AI jobs — weekly reports, nightly summaries, data refreshes — that currently requires custom glue code</td>
           </tr>
           
           <tr>
-            <td class="vendor">Codex Plugins & Skills</td>
-            <td><span class="badge badge-cat">Agent Tooling</span></td>
-            <td>Reusable skill definitions could become the equivalent of function libraries for AI agents—reducing prompt duplication and standardizing tool-use patterns across projects.</td>
-            <td>When your team is building multiple agents that share common tool interactions (e.g., file read/write, search, data formatting). Invest early to establish reusable patterns.</td>
+            <td class="vendor">Google TPU Gen 8 (Agentic Variants)</td>
+            <td><span class="badge badge-cat">Infrastructure</span></td>
+            <td>Purpose-built for agentic inference patterns, not just training — signals Google Cloud is optimizing the full agentic stack, not just model APIs</td>
+            <td>High-throughput agentic systems on Vertex AI where GPU costs are prohibitive or latency SLAs are tight</td>
           </tr>
           
         </tbody>
@@ -673,22 +673,22 @@
         <tbody>
           
           <tr>
-            <td class="experiment">Swap your current production model for GPT-5.5 on your most complex prompt chain and run your existing eval suite</td>
-            <td>Quantify the capability and speed delta versus your current model to make a data-driven upgrade decision</td>
+            <td class="experiment">Swap your current GPT-4o or GPT-5 coding endpoint for GPT-5.5 and run your existing eval suite</td>
+            <td>Quantify whether GPT-5.5 improves pass@1 rates on your real coding tasks while reducing p95 latency</td>
             <td>
               <span class="badge badge-low">Low</span>
               
             </td>
-            <td>Within a single session you'll have concrete pass/fail rates and latency numbers to justify or delay migration—no guessing required</td>
+            <td>A clear data-driven migration decision within one sprint, avoiding speculative upgrades based on marketing claims</td>
           </tr>
           
           <tr>
-            <td class="experiment">Rebuild one existing cron-triggered LLM report job using Codex Automations with a schedule trigger</td>
-            <td>Validate whether Codex Automations can replace your external orchestration layer for a real production task</td>
+            <td class="experiment">Build one recurring internal workflow (e.g., weekly codebase summary or PR digest) using Codex Automations with a scheduled trigger</td>
+            <td>Validate whether Codex Automations can replace a custom Python script plus cron job in your internal tooling stack</td>
             <td>
               <span class="badge badge-medium">Medium</span>
             </td>
-            <td>Either a simplified architecture with one less system to maintain, or clear evidence of gaps in Codex Automations that inform your build-vs-buy decision</td>
+            <td>Either a maintained workflow with zero infrastructure overhead, or a clear list of capability gaps that inform your buy-vs-build decision</td>
           </tr>
           
         </tbody>
@@ -717,8 +717,18 @@
               
             </td>
             <td class="vendor">GPT-5.5</td>
-            <td>New flagship model released via OpenAI API and ChatGPT</td>
-            <td>Replaces GPT-5 as the recommended model for complex tasks; review your model selection logic and hardcoded model strings in production</td>
+            <td>New model tier above GPT-5, optimized for speed and complex task performance</td>
+            <td>System Card published — review safety evaluations before deploying in sensitive domains</td>
+          </tr>
+          
+          <tr>
+            <td>
+              <span class="badge badge-updated">Updated</span>
+              
+            </td>
+            <td class="vendor">OpenAI Codex</td>
+            <td>Added Automations (scheduled triggers), Plugins, and Skills framework</td>
+            <td>Codex is evolving into a full agentic platform — reassess it if you dismissed it previously as a simple code assistant</td>
           </tr>
           
           <tr>
@@ -726,9 +736,9 @@
               <span class="badge badge-added">Added</span>
               
             </td>
-            <td class="vendor">Codex Automations</td>
-            <td>Schedule and trigger-based task automation now available in Codex</td>
-            <td>Native alternative to external cron + API orchestration patterns; check if this deprecates any middleware you're currently paying for</td>
+            <td class="vendor">Google TPU Gen 8 (two agentic variants)</td>
+            <td>Two specialized chips released targeting agentic AI inference workloads</td>
+            <td>Availability through Google Cloud; pricing and regional rollout details not yet confirmed</td>
           </tr>
           
           <tr>
@@ -736,19 +746,9 @@
               <span class="badge badge-added">Added</span>
               
             </td>
-            <td class="vendor">Codex Plugins & Skills</td>
-            <td>Plugin and skill system launched for Codex to connect external tools and define repeatable workflows</td>
-            <td>Early days—catalog available plugins before designing new agent integrations to avoid rebuilding what's already available</td>
-          </tr>
-          
-          <tr>
-            <td>
-              <span class="badge badge-added">Added</span>
-              
-            </td>
-            <td class="vendor">Google TPU v8 (two variants)</td>
-            <td>Eighth-generation TPUs launched with specialization for agentic workloads</td>
-            <td>GCP-hosted training and inference customers should monitor pricing tiers; agentic specialization may reduce cost per agent-step at scale</td>
+            <td class="vendor">AI Mode in Chrome</td>
+            <td>New AI-powered web exploration mode integrated into Chrome browser</td>
+            <td>Consumer-facing; no direct API surface announced — monitor for developer hooks in future releases</td>
           </tr>
           
         </tbody>
@@ -759,12 +759,12 @@
 
   <!-- INSIGHT -->
   <div class="insight" id="insight">
-    <p class="insight-headline">OpenAI is collapsing the AI stack—and that's a strategic risk for tool vendors between it and your app</p>
-    <p class="insight-body">Today's releases show a clear pattern: OpenAI is vertically integrating upward from model to workflow. GPT-5.5 raises the capability floor, Codex Automations handles scheduling, and Plugins & Skills handle tool orchestration. Three separate product categories—foundation models, workflow automation, and agent tooling—shipped in a single news cycle from one vendor. Any team whose product sits in the middleware layer between an LLM and a business workflow (orchestration, scheduling, prompt management) should stress-test their differentiation today. The moat is narrowing fast.</p>
+    <p class="insight-headline">OpenAI is collapsing the agentic stack into a single platform — and the window for third-party orchestration tools is narrowing</p>
+    <p class="insight-body">Today's releases reveal a deliberate pattern: GPT-5.5 handles reasoning, Codex Automations handle scheduling, Plugins and Skills handle integrations, and the Workspace handles context persistence. OpenAI is assembling every layer of the agentic stack as a first-party product. Builders who have invested in custom orchestration using LangChain, Temporal, or bespoke cron-plus-LLM pipelines should urgently audit which layers Codex now covers natively. The risk is not that OpenAI builds better tools — it is that maintaining custom orchestration against a rapidly closing feature gap becomes an engineering tax with no competitive return.</p>
   </div>
 
   <footer>
-    <div>Sources: anthropic.com · openai.com · blog.google · ai.meta.com — Generated Friday, 24 April 2026, 2:00 PM AEST</div>
+    <div>Sources: anthropic.com · openai.com · blog.google · ai.meta.com — Generated Friday, 24 April 2026, 2:23 PM AEST</div>
   </footer>
 
 </div>

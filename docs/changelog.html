@@ -1,0 +1,1804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI Tools Changelog — ainews.mavenotics.com</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,700;9..144,900&family=JetBrains+Mono:wght@400;500;700&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f4efe6;
+    --paper-deep: #ebe4d6;
+    --ink: #1a1a1a;
+    --ink-soft: #4a4540;
+    --rule: #2a2520;
+    --accent: #c8341c;
+    --accent-soft: #e85a3f;
+    --use-now: #2d6a3f;
+    --watch: #b87a1f;
+    --ignore: #6a6660;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter Tight', -apple-system, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.5;
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(200,52,28,0.04) 0%, transparent 40%),
+      radial-gradient(circle at 80% 90%, rgba(45,106,63,0.04) 0%, transparent 40%);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.4;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.008) 2px, rgba(0,0,0,0.008) 3px);
+    z-index: 1;
+  }
+
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 48px 56px 80px;
+    position: relative;
+    z-index: 2;
+  }
+
+  body.nav-active .container { padding-top: 72px; transition: padding-top 0.3s ease; }
+
+  /* ============ TOPBAR ============ */
+  .topbar {
+    border-top: 6px double var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 16px 0;
+    margin-bottom: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .topbar-left { color: var(--accent); font-weight: 700; }
+  .topbar-right { display: flex; gap: 24px; }
+  .topbar-right a { color: var(--ink-soft); text-decoration: none; transition: color 0.2s; }
+  .topbar-right a:hover { color: var(--accent); }
+
+  /* ============ TITLE ============ */
+  .title-block {
+    padding: 36px 0 20px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 32px;
+    align-items: end;
+  }
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: clamp(44px, 6vw, 80px);
+    line-height: 0.92;
+    letter-spacing: -0.03em;
+  }
+  .title-meta {
+    text-align: right;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--ink-soft);
+    line-height: 1.8;
+    text-transform: uppercase;
+  }
+  .title-meta strong { display: block; color: var(--ink); font-size: 13px; margin-bottom: 4px; }
+
+  .title-timestamp {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink);
+    font-weight: 500;
+    padding: 18px 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+  .title-timestamp::before { content: '◆ '; color: var(--accent); }
+
+  .deck {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 20px;
+    line-height: 1.4;
+    color: var(--ink-soft);
+    max-width: 720px;
+    padding: 24px 0 0;
+  }
+
+  /* ============ NAV ============ */
+  .section-nav { height: 48px; margin-bottom: 48px; margin-top: 28px; }
+  .section-nav-inner {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: var(--paper);
+    border-bottom: 1px solid var(--rule);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    transform: translateY(-100%);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .section-nav-inner.visible { transform: translateY(0); box-shadow: 0 3px 20px rgba(26,26,26,0.10); }
+  .nav-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 48px;
+    padding: 0 24px;
+    gap: 2px;
+  }
+  .nav-bar a { color: var(--ink-soft); text-decoration: none; padding: 5px 11px; font-weight: 500; white-space: nowrap; border-bottom: 2px solid transparent; transition: color 0.15s; }
+  .nav-bar a:hover { color: var(--accent); }
+  .nav-bar a.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 700; }
+  .nav-bar a.back-link { color: var(--accent); border-left: 1px solid rgba(42,37,32,0.2); margin-left: 8px; padding-left: 16px; }
+  .nav-bar a.back-link::before { content: '← '; }
+  .nav-bar .nav-divider { color: var(--ink-soft); opacity: 0.2; user-select: none; font-size: 9px; }
+
+  .nav-hamburger {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    height: 48px;
+    padding: 0 20px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    width: 100%;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .nav-hamburger-label { font-weight: 700; }
+  .nav-hamburger-label .active-name { color: var(--accent); }
+  .nav-hamburger-icon { display: flex; flex-direction: column; gap: 4px; width: 18px; }
+  .nav-hamburger-icon span { display: block; height: 1.5px; background: var(--ink); transition: transform 0.25s, opacity 0.25s; }
+  .nav-hamburger.open .nav-hamburger-icon span:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
+  .nav-hamburger.open .nav-hamburger-icon span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open .nav-hamburger-icon span:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
+  .nav-dropdown { display: none; flex-direction: column; background: var(--paper); border-top: 1px solid rgba(42,37,32,0.15); padding: 8px 0 12px; }
+  .nav-dropdown.open { display: flex; }
+  .nav-dropdown a { color: var(--ink-soft); text-decoration: none; padding: 11px 20px; font-weight: 500; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; border-left: 3px solid transparent; transition: color 0.15s, border-color 0.15s; }
+  .nav-dropdown a:hover { color: var(--accent); }
+  .nav-dropdown a.active { color: var(--accent); border-left-color: var(--accent); font-weight: 700; background: rgba(200,52,28,0.04); }
+  .nav-dropdown a .nav-num { color: var(--accent); margin-right: 10px; opacity: 0.6; }
+
+  @media (max-width: 860px) {
+    .nav-bar { display: none; }
+    .nav-hamburger { display: flex; }
+  }
+
+  section { scroll-margin-top: 72px; margin-bottom: 56px; }
+
+  /* ============ SUMMARY BLOCK ============ */
+  .summary-block {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 36px 44px;
+    margin-bottom: 48px;
+    border-left: 8px solid var(--accent);
+    position: relative;
+  }
+  .summary-block::before {
+    content: 'THIS WEEK';
+    position: absolute;
+    top: 18px; right: 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--accent-soft);
+    font-weight: 700;
+  }
+  .summary-text {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: clamp(18px, 2.4vw, 26px);
+    line-height: 1.4;
+    margin-bottom: 16px;
+  }
+  .trend-observation {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(244,239,230,0.7);
+    line-height: 1.6;
+  }
+  .trend-observation::before { content: '→ TREND: '; color: var(--accent-soft); font-weight: 700; }
+
+  /* ============ SECTION HEADERS ============ */
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--accent); font-weight: 700; letter-spacing: 0.1em; }
+  .section-num::before { content: '§ '; }
+  h2 { font-family: 'Fraunces', serif; font-weight: 700; font-size: 28px; letter-spacing: -0.02em; }
+  .section-rule { flex: 1; height: 1px; background: var(--rule); margin-bottom: 8px; }
+
+  /* ============ CHANGE CARDS ============ */
+  .changes-list { display: flex; flex-direction: column; gap: 12px; }
+  .change-card {
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    gap: 0 16px;
+    align-items: start;
+    padding: 16px 20px;
+    border: 1px solid var(--rule);
+    background: rgba(255,255,255,0.3);
+    transition: background 0.2s;
+  }
+  .change-card:hover { background: rgba(200,52,28,0.04); }
+
+  .signal-icon {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.4;
+    width: 28px;
+    text-align: center;
+  }
+  .signal-up      { color: var(--use-now); }
+  .signal-down    { color: var(--accent); }
+  .signal-new     { color: var(--use-now); }
+  .signal-removed { color: var(--ignore); }
+  .signal-changed { color: var(--watch); }
+
+  .change-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 140px;
+  }
+  .change-item {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+  .change-section {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .change-type-badge {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border: 1px solid currentColor;
+  }
+  .badge-added      { color: var(--use-now); }
+  .badge-removed    { color: var(--ignore); }
+  .badge-updated    { color: var(--watch); }
+  .badge-popularity { color: var(--accent); }
+
+  .change-detail {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    padding-top: 2px;
+  }
+
+  /* ============ NO CHANGES ============ */
+  .no-changes {
+    padding: 32px;
+    border: 1px dashed rgba(42,37,32,0.3);
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  /* ============ HISTORY ============ */
+  .history-list { display: flex; flex-direction: column; gap: 0; }
+  .history-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(42,37,32,0.12);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+  }
+  .history-item:last-child { border-bottom: none; }
+  .history-date { color: var(--ink); font-weight: 700; text-transform: uppercase; }
+  .history-summary { color: var(--ink-soft); font-size: 11px; max-width: 60%; text-align: right; }
+  .history-count {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--paper);
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 8px;
+    margin-left: 12px;
+    letter-spacing: 0.1em;
+  }
+
+  /* ============ FOOTER ============ */
+  footer {
+    margin-top: 72px;
+    padding-top: 24px;
+    border-top: 6px double var(--rule);
+    display: flex;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  /* ============ ANIMATIONS ============ */
+  @keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+  .title-block, .summary-block, section, footer { animation: rise 0.6s ease-out backwards; }
+  .summary-block { animation-delay: 0.1s; }
+  section:nth-of-type(1) { animation-delay: 0.2s; }
+  section:nth-of-type(2) { animation-delay: 0.3s; }
+  footer { animation-delay: 0.4s; }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 1024px) { .container { padding: 40px 36px 72px; } body.nav-active .container { padding-top: 68px; } }
+  @media (max-width: 768px) {
+    .container { padding: 20px 16px 60px; }
+    body.nav-active .container { padding-top: 68px; }
+    .topbar { flex-direction: column; gap: 6px; font-size: 10px; }
+    .topbar-right { gap: 16px; }
+    .title-block { grid-template-columns: 1fr; gap: 12px; padding: 24px 0 16px; }
+    h1 { font-size: clamp(40px, 12vw, 60px); }
+    .title-meta { text-align: left; font-size: 10px; }
+    .title-timestamp { font-size: 10px; padding: 12px 0; }
+    .deck { font-size: 17px; }
+    .summary-block { padding: 24px 20px; }
+    .summary-text { font-size: 18px; }
+    .change-card { grid-template-columns: auto 1fr; gap: 8px 12px; }
+    .change-meta { min-width: unset; }
+    .change-detail { grid-column: 1 / -1; padding-top: 4px; }
+    h2 { font-size: 22px; }
+    .history-summary { display: none; }
+    footer { flex-direction: column; gap: 6px; font-size: 9px; }
+  }
+  @media (max-width: 380px) { .container { padding: 16px 12px 48px; } }
+  @media print { body { background: white; } body::before { display: none; } .section-nav-inner { display: none; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="topbar">
+    <div class="topbar-left">◆ AI Tools Changelog — ainews.mavenotics.com</div>
+    <div class="topbar-right">
+      <a href="tools.html">← Tools Reference</a>
+      <a href="latest.html">Today's Brief</a>
+    </div>
+  </div>
+
+  <div class="title-block">
+    <h1>Tools<br>Changelog.</h1>
+    <div class="title-meta">
+      <strong>Weekly Diff</strong>
+      Updated every Monday<br>
+      Friday, 24 April 2026<br>
+      ainews.mavenotics.com
+    </div>
+  </div>
+
+  <p class="title-timestamp">Week of Friday, 24 April 2026 — 2:23 PM AEST</p>
+
+  <p class="deck">
+    What changed in the AI tools landscape this week. Every shift in vendor offerings, open models, and best-tool recommendations — tracked and diffed automatically.
+  </p>
+
+  <nav class="section-nav" aria-label="Section navigation">
+    <div class="section-nav-inner" id="stickyNav">
+      <div class="nav-bar">
+        <a href="#this-week">This Week</a>
+        <span class="nav-divider">/</span>
+        <a href="#history">History</a>
+        <span class="nav-divider">/</span>
+        <a href="tools.html" class="back-link">Tools Reference</a>
+        <span class="nav-divider">/</span>
+        <a href="latest.html" class="back-link">Today's Brief</a>
+      </div>
+      <button class="nav-hamburger" id="navHamburger" aria-label="Open navigation">
+        <span class="nav-hamburger-label">◆ Navigate — <span class="active-name" id="activeName">This Week</span></span>
+        <span class="nav-hamburger-icon"><span></span><span></span><span></span></span>
+      </button>
+      <div class="nav-dropdown" id="navDropdown">
+        <a href="#this-week"><span class="nav-num">01</span>This Week</a>
+        <a href="#history"><span class="nav-num">02</span>History</a>
+        <a href="tools.html"><span class="nav-num">←</span>Tools Reference</a>
+        <a href="latest.html"><span class="nav-num">←</span>Today's Brief</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Summary block -->
+  <div class="summary-block">
+    <p class="summary-text">Meta replaced Llama 3 with Llama 4 models; OpenAI dropped GPT-4o/o4-mini for GPT-4.1/o3; agent frameworks gained popularity.</p>
+    <p class="trend-observation">Llama 4 and GPT-4.1 dominate; agent frameworks surge as the week's standout growth layer.</p>
+  </div>
+
+  <!-- 01 THIS WEEK'S CHANGES -->
+  <section id="this-week">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>This Week's Changes</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    
+    <div class="changes-list">
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">OpenAI — Core Models</span>
+          <span class="change-section">ecosystem</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">GPT-4o and o4-mini replaced by GPT-4.1 and o3.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Meta — Core Models</span>
+          <span class="change-section">ecosystem</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">Llama 3.3 70B and Llama 3.2 replaced by Llama 4 Scout and Maverick.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-down">
+          ↓
+          
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Core Models — popularity</span>
+          <span class="change-section">ecosystem</span>
+          <span class="change-type-badge badge-popularity">popularity</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">Popularity dropped from 98 to 97.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-down">
+          ↓
+          
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">APIs / Platform — popularity</span>
+          <span class="change-section">ecosystem</span>
+          <span class="change-type-badge badge-popularity">popularity</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">Popularity dropped from 95 to 94.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">OpenAI — APIs / Platform</span>
+          <span class="change-section">ecosystem</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">Batch API removed; Azure OpenAI added as platform entry.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Meta — APIs / Platform</span>
+          <span class="change-section">ecosystem</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">Llama API beta promoted; Meta AI Platform added.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Google — Dev Tools</span>
+          <span class="change-section">ecosystem</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">Firebase Genkit removed; Vertex AI SDK added.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">OpenAI — Dev Tools</span>
+          <span class="change-section">ecosystem</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">Playground and Evals replaced by OpenAI SDK and Assistants API.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Anthropic — Dev Tools</span>
+          <span class="change-section">ecosystem</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">Prompt Console replaced by Anthropic SDK.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Meta — Dev Tools</span>
+          <span class="change-section">ecosystem</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">Llama Stack and torchtune replaced by LlamaIndex integrations and PyTorch.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Microsoft — Dev Tools</span>
+          <span class="change-section">ecosystem</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">GitHub Copilot removed; Prompt Flow added alongside Semantic Kernel.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Anthropic — Assistants / Apps</span>
+          <span class="change-section">ecosystem</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">Claude Projects added as new product entry.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Meta — Assistants / Apps</span>
+          <span class="change-section">ecosystem</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">Instagram AI removed; WhatsApp AI listed explicitly.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Microsoft — Assistants / Apps</span>
+          <span class="change-section">ecosystem</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">Bing Chat replaced by Copilot Studio.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-down">
+          ↓
+          
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Assistants / Apps — popularity</span>
+          <span class="change-section">ecosystem</span>
+          <span class="change-type-badge badge-popularity">popularity</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">Popularity dropped from 97 to 96.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Google — Research Tools</span>
+          <span class="change-section">ecosystem</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">DeepMind Gemini Research and Google Scholar AI replaced by DeepMind and AlphaFold 3.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">OpenAI — Research Tools</span>
+          <span class="change-section">ecosystem</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">Deep Research (ChatGPT Pro) replaced by OpenAI Research and Deep Research.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Anthropic — Research Tools</span>
+          <span class="change-section">ecosystem</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">Claude Research Mode replaced by Constitutional AI and Model Card research.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Google — Creative / Media</span>
+          <span class="change-section">ecosystem</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">MusicFX removed from Google creative tools listing.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Meta — Creative / Media</span>
+          <span class="change-section">ecosystem</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">Meta MovieGen removed; Meta Imagine added alongside Emu Video.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Microsoft — Creative / Media</span>
+          <span class="change-section">ecosystem</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">Microsoft Designer renamed to Designer.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Meta — Edge / On-device</span>
+          <span class="change-section">ecosystem</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">Llama 3.2 1B/3B replaced by Llama 4 Scout on-device.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Microsoft — Edge / On-device</span>
+          <span class="change-section">ecosystem</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">ONNX Runtime replaced by Windows Copilot Runtime.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-up">
+          ↑
+          
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Edge / On-device — popularity</span>
+          <span class="change-section">ecosystem</span>
+          <span class="change-type-badge badge-popularity">popularity</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">Popularity increased from 61 to 65.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Google — Voice / Speech</span>
+          <span class="change-section">ecosystem</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">Cloud TTS, Chirp 2, NotebookLM Audio replaced by Speech-to-Text and Gemini Live.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">OpenAI — Voice / Speech</span>
+          <span class="change-section">ecosystem</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">TTS API removed; GPT-4o Voice retained with Whisper.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Meta — Voice / Speech</span>
+          <span class="change-section">ecosystem</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">Voicebox replaced by MMS.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Microsoft — Voice / Speech</span>
+          <span class="change-section">ecosystem</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">Azure Speech Services shortened to Azure Speech.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Google — Agent Frameworks</span>
+          <span class="change-section">ecosystem</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">ADK and Vertex AI Agents replaced by Agent Builder and Agentspace.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Anthropic — Agent Frameworks</span>
+          <span class="change-section">ecosystem</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">Claude Agents added alongside Model Context Protocol.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-removed">
+          −
+          
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Meta — Agent Frameworks</span>
+          <span class="change-section">ecosystem</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">Llama Stack Agents removed; Meta has no agent framework entry.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Microsoft — Agent Frameworks</span>
+          <span class="change-section">ecosystem</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">Azure AI Agent Service removed; Semantic Kernel Agents added.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-up">
+          ↑
+          
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Agent Frameworks — popularity</span>
+          <span class="change-section">ecosystem</span>
+          <span class="change-type-badge badge-popularity">popularity</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">Popularity increased from 80 to 85.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Meta — Llama 4</span>
+          <span class="change-section">open models</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">Llama 4 Scout 17B and Maverick 17B added; older Llama 3.x models largely removed.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Meta — License</span>
+          <span class="change-section">open models</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">License updated from Llama Community to Llama 4 Community License.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Google — Gemma 3</span>
+          <span class="change-section">open models</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">Gemma 2 variants removed; Gemma 3 lineup streamlined to 4B/12B/27B.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Mistral AI — models</span>
+          <span class="change-section">open models</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">Mistral 7B and NeMo replaced by Mistral Large 2 and Mixtral 8x22B.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Mistral AI — license</span>
+          <span class="change-section">open models</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">Mistral Research License noted for Large variant.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">DeepSeek — models</span>
+          <span class="change-section">open models</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">DeepSeek-Coder-V2 replaced by DeepSeek-R1-Distill-Qwen-32B.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Alibaba / Qwen — models</span>
+          <span class="change-section">open models</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">Full size range replaced by 72B, Coder-32B, and QwQ-32B focused listing.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Microsoft — Phi models</span>
+          <span class="change-section">open models</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">Phi-4-mini renamed to Phi-4 Mini 3.8B; lineup otherwise unchanged.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Cohere — models</span>
+          <span class="change-section">open models</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">Aya 23 replaced by Aya Expanse 32B.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Cohere — license</span>
+          <span class="change-section">open models</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">License updated to CC-BY-NC for research with commercial option.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">01.AI — models</span>
+          <span class="change-section">open models</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">6B variant removed; Yi-1.5-34B and Yi-1.5-9B retained.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-removed">
+          −
+          
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">NovaSky / Berkeley — Sky-T1</span>
+          <span class="change-section">open models</span>
+          <span class="change-type-badge badge-removed">removed</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">Sky-T1-32B-Preview entry removed entirely from open models.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">TII — Falcon 3</span>
+          <span class="change-section">open models</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">Falcon 2 replaced by Falcon 3 (10B, 7B, 180B); license updated to Apache 2.0.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Chat — best closed</span>
+          <span class="change-section">best tools</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">GPT-4o replaced by GPT-4.1.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Chat — best open</span>
+          <span class="change-section">best tools</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">Llama 3.3 70B and Mistral replaced by Llama 4 Maverick and DeepSeek-V3.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Coding — best closed</span>
+          <span class="change-section">best tools</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">GitHub Copilot removed; GPT-4.1 added as primary coding tool.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Coding — best open</span>
+          <span class="change-section">best tools</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">DeepSeek-Coder-V2 replaced by DeepSeek-V3.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">RAG — best closed</span>
+          <span class="change-section">best tools</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">OpenAI API embeddings replaced by Azure OpenAI plus AI Search.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">RAG — best open</span>
+          <span class="change-section">best tools</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">Mistral 7B plus LangChain replaced by Llama 3.3 70B plus LlamaIndex.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Agents — best closed</span>
+          <span class="change-section">best tools</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">Vertex AI Agents replaced by Claude MCP Agents.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Agents — best open</span>
+          <span class="change-section">best tools</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">Llama Stack Agents replaced by LangGraph plus Llama 4.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Search — best open</span>
+          <span class="change-section">best tools</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">Llama 3 replaced by Llama 4; Jina Reader plus Mistral added.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Image — best closed</span>
+          <span class="change-section">best tools</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">Midjourney version updated from v6.1 to v7.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Image — best open</span>
+          <span class="change-section">best tools</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">FLUX.1 promoted to first position over Stable Diffusion 3.5.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Video — best closed</span>
+          <span class="change-section">best tools</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">Kling 1.6 replaced by Runway Gen-3 Alpha.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Video — best open</span>
+          <span class="change-section">best tools</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">CogVideoX-5B promoted to first; Open-Sora moved to second.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Speech — best closed</span>
+          <span class="change-section">best tools</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">ElevenLabs added; OpenAI TTS API rebranded to GPT-4o Audio.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Speech — best open</span>
+          <span class="change-section">best tools</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">Coqui XTTS-v2 removed; Kokoro-82M TTS replaces Kokoro TTS.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Edge — best closed</span>
+          <span class="change-section">best tools</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">Apple Intelligence replaced by Windows Copilot Runtime.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Edge — best open</span>
+          <span class="change-section">best tools</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">Llama 4 Scout added; Gemma 3 1B replaced by Gemma 3 4B.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Fine-tuning — best open</span>
+          <span class="change-section">best tools</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">Llama 3.1 8B plus torchtune replaced by Llama 3.3 70B plus TRL.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Multimodal — best closed</span>
+          <span class="change-section">best tools</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">GPT-4o and Claude 3.7 Sonnet replaced by GPT-4.1 only alongside Gemini 2.5 Pro.</div>
+
+      </div>
+      
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-changed">
+          ~
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">Multimodal — best open</span>
+          <span class="change-section">best tools</span>
+          <span class="change-type-badge badge-updated">updated</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">Llama 3.2 Vision replaced by Llama 4 Scout; Qwen2.5-VL retained.</div>
+
+      </div>
+      
+    </div>
+
+    
+
+  </section>
+
+  <!-- 02 CHANGELOG HISTORY -->
+  <section id="history">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>History</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    
+    <div class="no-changes">◆ History builds from next Monday onwards</div>
+    
+
+  </section>
+
+  <footer>
+    <div>ainews.mavenotics.com — AI Tools Changelog</div>
+    <div>Updated Friday, 24 April 2026, 2:23 PM AEST</div>
+  </footer>
+
+</div>
+<script>
+  const nav        = document.getElementById('stickyNav');
+  const navWrap    = nav.closest('.section-nav');
+  const hamburger  = document.getElementById('navHamburger');
+  const dropdown   = document.getElementById('navDropdown');
+  const activeName = document.getElementById('activeName');
+  const sections   = ['this-week', 'history'];
+
+  const barLinks  = nav.querySelectorAll('.nav-bar a:not(.back-link)');
+  const dropLinks = nav.querySelectorAll('.nav-dropdown a');
+  const allLinks  = [...barLinks, ...dropLinks];
+
+  const sectionLabels = { 'this-week': 'This Week', 'history': 'History' };
+
+  const visObserver = new IntersectionObserver(([e]) => {
+    const isSticky = !e.isIntersecting;
+    nav.classList.toggle('visible', isSticky);
+    document.body.classList.toggle('nav-active', isSticky);
+  }, { threshold: 0 });
+  visObserver.observe(navWrap);
+
+  hamburger.addEventListener('click', () => {
+    const isOpen = dropdown.classList.toggle('open');
+    hamburger.classList.toggle('open', isOpen);
+    nav.classList.toggle('menu-open', isOpen);
+  });
+
+  dropLinks.forEach(a => {
+    a.addEventListener('click', () => {
+      dropdown.classList.remove('open');
+      hamburger.classList.remove('open');
+      nav.classList.remove('menu-open');
+    });
+  });
+
+  const sectionEls = sections.map(id => document.getElementById(id)).filter(Boolean);
+  const activeObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        allLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === `#${id}`));
+        if (activeName) activeName.textContent = sectionLabels[id] || id;
+      }
+    });
+  }, { rootMargin: '-15% 0px -80% 0px', threshold: 0 });
+  sectionEls.forEach(el => activeObserver.observe(el));
+</script>
+</body>
+</html>
