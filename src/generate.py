@@ -89,7 +89,10 @@ def generate_brief(headlines):
         '    }\n'
         '  ],\n'
         '  "insight_headline": "",\n'
-        '  "insight_body": ""\n'
+        '  "insight_body": "",\n'
+        '  "quote_text": "",\n'
+        '  "quote_author": "",\n'
+        '  "quote_source": ""\n'
         '}\n\n'
         "Rules:\n"
         "- key_updates: 5-8 rows, high signal only, ignore hype\n"
@@ -97,6 +100,7 @@ def generate_brief(headlines):
         "- try_this: max 2 rows\n"
         "- tool_map: only include if real tool changes exist today\n"
         "- insight: one sharp pattern observation across today's news\n"
+        "- quote: a real historical AI or technology quote, different every day\n"
         "- Be concise and opinionated, avoid generic statements\n"
         "- Return ONLY valid JSON, no other text, no markdown fences"
     )
