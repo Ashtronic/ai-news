@@ -201,6 +201,13 @@
   }
   .nav-bar a:hover { color: var(--accent); }
   .nav-bar a.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 700; }
+  .nav-bar a.nav-tools-link {
+    color: var(--accent);
+    font-weight: 700;
+    border-left: 1px solid rgba(42,37,32,0.2);
+    margin-left: 8px;
+    padding-left: 16px;
+  }
   .nav-bar .nav-divider { color: var(--ink-soft); opacity: 0.2; user-select: none; font-size: 9px; }
 
   .nav-hamburger {
@@ -499,6 +506,8 @@
         <a href="#map">Tool Map</a>
         <span class="nav-divider">/</span>
         <a href="#insight">Insight</a>
+        <span class="nav-divider">/</span>
+        <a href="tools.html" class="nav-tools-link">◆ Tools Reference</a>
       </div>
       <button class="nav-hamburger" id="navHamburger" aria-label="Open navigation">
         <span class="nav-hamburger-label">◆ Navigate — <span class="active-name" id="activeName">Key Updates</span></span>
@@ -510,6 +519,7 @@
         <a href="#try"><span class="nav-num">03</span>Try This</a>
         <a href="#map"><span class="nav-num">04</span>Tool Map</a>
         <a href="#insight"><span class="nav-num">→</span>Insight</a>
+        <a href="tools.html"><span class="nav-num">◆</span>Tools Reference</a>
       </div>
     </div>
   </nav>
