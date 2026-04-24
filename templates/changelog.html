@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI Tools Changelog — ainews.mavenotics.com</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,700;9..144,900&family=JetBrains+Mono:wght@400;500;700&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f4efe6;
+    --paper-deep: #ebe4d6;
+    --ink: #1a1a1a;
+    --ink-soft: #4a4540;
+    --rule: #2a2520;
+    --accent: #c8341c;
+    --accent-soft: #e85a3f;
+    --use-now: #2d6a3f;
+    --watch: #b87a1f;
+    --ignore: #6a6660;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter Tight', -apple-system, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.5;
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(200,52,28,0.04) 0%, transparent 40%),
+      radial-gradient(circle at 80% 90%, rgba(45,106,63,0.04) 0%, transparent 40%);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.4;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.008) 2px, rgba(0,0,0,0.008) 3px);
+    z-index: 1;
+  }
+
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 48px 56px 80px;
+    position: relative;
+    z-index: 2;
+  }
+
+  body.nav-active .container { padding-top: 72px; transition: padding-top 0.3s ease; }
+
+  /* ============ TOPBAR ============ */
+  .topbar {
+    border-top: 6px double var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 16px 0;
+    margin-bottom: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .topbar-left { color: var(--accent); font-weight: 700; }
+  .topbar-right { display: flex; gap: 24px; }
+  .topbar-right a { color: var(--ink-soft); text-decoration: none; transition: color 0.2s; }
+  .topbar-right a:hover { color: var(--accent); }
+
+  /* ============ TITLE ============ */
+  .title-block {
+    padding: 36px 0 20px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 32px;
+    align-items: end;
+  }
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: clamp(44px, 6vw, 80px);
+    line-height: 0.92;
+    letter-spacing: -0.03em;
+  }
+  .title-meta {
+    text-align: right;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--ink-soft);
+    line-height: 1.8;
+    text-transform: uppercase;
+  }
+  .title-meta strong { display: block; color: var(--ink); font-size: 13px; margin-bottom: 4px; }
+
+  .title-timestamp {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink);
+    font-weight: 500;
+    padding: 18px 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+  .title-timestamp::before { content: '◆ '; color: var(--accent); }
+
+  .deck {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 20px;
+    line-height: 1.4;
+    color: var(--ink-soft);
+    max-width: 720px;
+    padding: 24px 0 0;
+  }
+
+  /* ============ NAV ============ */
+  .section-nav { height: 48px; margin-bottom: 48px; margin-top: 28px; }
+  .section-nav-inner {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: var(--paper);
+    border-bottom: 1px solid var(--rule);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    transform: translateY(-100%);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .section-nav-inner.visible { transform: translateY(0); box-shadow: 0 3px 20px rgba(26,26,26,0.10); }
+  .nav-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 48px;
+    padding: 0 24px;
+    gap: 2px;
+  }
+  .nav-bar a { color: var(--ink-soft); text-decoration: none; padding: 5px 11px; font-weight: 500; white-space: nowrap; border-bottom: 2px solid transparent; transition: color 0.15s; }
+  .nav-bar a:hover { color: var(--accent); }
+  .nav-bar a.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 700; }
+  .nav-bar a.back-link { color: var(--accent); border-left: 1px solid rgba(42,37,32,0.2); margin-left: 8px; padding-left: 16px; }
+  .nav-bar a.back-link::before { content: '← '; }
+  .nav-bar .nav-divider { color: var(--ink-soft); opacity: 0.2; user-select: none; font-size: 9px; }
+
+  .nav-hamburger {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    height: 48px;
+    padding: 0 20px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    width: 100%;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .nav-hamburger-label { font-weight: 700; }
+  .nav-hamburger-label .active-name { color: var(--accent); }
+  .nav-hamburger-icon { display: flex; flex-direction: column; gap: 4px; width: 18px; }
+  .nav-hamburger-icon span { display: block; height: 1.5px; background: var(--ink); transition: transform 0.25s, opacity 0.25s; }
+  .nav-hamburger.open .nav-hamburger-icon span:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
+  .nav-hamburger.open .nav-hamburger-icon span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open .nav-hamburger-icon span:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
+  .nav-dropdown { display: none; flex-direction: column; background: var(--paper); border-top: 1px solid rgba(42,37,32,0.15); padding: 8px 0 12px; }
+  .nav-dropdown.open { display: flex; }
+  .nav-dropdown a { color: var(--ink-soft); text-decoration: none; padding: 11px 20px; font-weight: 500; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; border-left: 3px solid transparent; transition: color 0.15s, border-color 0.15s; }
+  .nav-dropdown a:hover { color: var(--accent); }
+  .nav-dropdown a.active { color: var(--accent); border-left-color: var(--accent); font-weight: 700; background: rgba(200,52,28,0.04); }
+  .nav-dropdown a .nav-num { color: var(--accent); margin-right: 10px; opacity: 0.6; }
+
+  @media (max-width: 860px) {
+    .nav-bar { display: none; }
+    .nav-hamburger { display: flex; }
+  }
+
+  section { scroll-margin-top: 72px; margin-bottom: 56px; }
+
+  /* ============ SUMMARY BLOCK ============ */
+  .summary-block {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 36px 44px;
+    margin-bottom: 48px;
+    border-left: 8px solid var(--accent);
+    position: relative;
+  }
+  .summary-block::before {
+    content: 'THIS WEEK';
+    position: absolute;
+    top: 18px; right: 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--accent-soft);
+    font-weight: 700;
+  }
+  .summary-text {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: clamp(18px, 2.4vw, 26px);
+    line-height: 1.4;
+    margin-bottom: 16px;
+  }
+  .trend-observation {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(244,239,230,0.7);
+    line-height: 1.6;
+  }
+  .trend-observation::before { content: '→ TREND: '; color: var(--accent-soft); font-weight: 700; }
+
+  /* ============ SECTION HEADERS ============ */
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--accent); font-weight: 700; letter-spacing: 0.1em; }
+  .section-num::before { content: '§ '; }
+  h2 { font-family: 'Fraunces', serif; font-weight: 700; font-size: 28px; letter-spacing: -0.02em; }
+  .section-rule { flex: 1; height: 1px; background: var(--rule); margin-bottom: 8px; }
+
+  /* ============ CHANGE CARDS ============ */
+  .changes-list { display: flex; flex-direction: column; gap: 12px; }
+  .change-card {
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    gap: 0 16px;
+    align-items: start;
+    padding: 16px 20px;
+    border: 1px solid var(--rule);
+    background: rgba(255,255,255,0.3);
+    transition: background 0.2s;
+  }
+  .change-card:hover { background: rgba(200,52,28,0.04); }
+
+  .signal-icon {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.4;
+    width: 28px;
+    text-align: center;
+  }
+  .signal-up      { color: var(--use-now); }
+  .signal-down    { color: var(--accent); }
+  .signal-new     { color: var(--use-now); }
+  .signal-removed { color: var(--ignore); }
+  .signal-changed { color: var(--watch); }
+
+  .change-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 140px;
+  }
+  .change-item {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+  .change-section {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .change-type-badge {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border: 1px solid currentColor;
+  }
+  .badge-added      { color: var(--use-now); }
+  .badge-removed    { color: var(--ignore); }
+  .badge-updated    { color: var(--watch); }
+  .badge-popularity { color: var(--accent); }
+
+  .change-detail {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    padding-top: 2px;
+  }
+
+  /* ============ NO CHANGES ============ */
+  .no-changes {
+    padding: 32px;
+    border: 1px dashed rgba(42,37,32,0.3);
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  /* ============ HISTORY ============ */
+  .history-list { display: flex; flex-direction: column; gap: 0; }
+  .history-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(42,37,32,0.12);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+  }
+  .history-item:last-child { border-bottom: none; }
+  .history-date { color: var(--ink); font-weight: 700; text-transform: uppercase; }
+  .history-summary { color: var(--ink-soft); font-size: 11px; max-width: 60%; text-align: right; }
+  .history-count {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--paper);
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 8px;
+    margin-left: 12px;
+    letter-spacing: 0.1em;
+  }
+
+  /* ============ FOOTER ============ */
+  footer {
+    margin-top: 72px;
+    padding-top: 24px;
+    border-top: 6px double var(--rule);
+    display: flex;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  /* ============ ANIMATIONS ============ */
+  @keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+  .title-block, .summary-block, section, footer { animation: rise 0.6s ease-out backwards; }
+  .summary-block { animation-delay: 0.1s; }
+  section:nth-of-type(1) { animation-delay: 0.2s; }
+  section:nth-of-type(2) { animation-delay: 0.3s; }
+  footer { animation-delay: 0.4s; }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 1024px) { .container { padding: 40px 36px 72px; } body.nav-active .container { padding-top: 68px; } }
+  @media (max-width: 768px) {
+    .container { padding: 20px 16px 60px; }
+    body.nav-active .container { padding-top: 68px; }
+    .topbar { flex-direction: column; gap: 6px; font-size: 10px; }
+    .topbar-right { gap: 16px; }
+    .title-block { grid-template-columns: 1fr; gap: 12px; padding: 24px 0 16px; }
+    h1 { font-size: clamp(40px, 12vw, 60px); }
+    .title-meta { text-align: left; font-size: 10px; }
+    .title-timestamp { font-size: 10px; padding: 12px 0; }
+    .deck { font-size: 17px; }
+    .summary-block { padding: 24px 20px; }
+    .summary-text { font-size: 18px; }
+    .change-card { grid-template-columns: auto 1fr; gap: 8px 12px; }
+    .change-meta { min-width: unset; }
+    .change-detail { grid-column: 1 / -1; padding-top: 4px; }
+    h2 { font-size: 22px; }
+    .history-summary { display: none; }
+    footer { flex-direction: column; gap: 6px; font-size: 9px; }
+  }
+  @media (max-width: 380px) { .container { padding: 16px 12px 48px; } }
+  @media print { body { background: white; } body::before { display: none; } .section-nav-inner { display: none; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="topbar">
+    <div class="topbar-left">◆ AI Tools Changelog — ainews.mavenotics.com</div>
+    <div class="topbar-right">
+      <a href="tools.html">← Tools Reference</a>
+      <a href="latest.html">Today's Brief</a>
+    </div>
+  </div>
+
+  <div class="title-block">
+    <h1>Tools<br>Changelog.</h1>
+    <div class="title-meta">
+      <strong>Weekly Diff</strong>
+      Updated every Monday<br>
+      {{ date_human }}<br>
+      ainews.mavenotics.com
+    </div>
+  </div>
+
+  <p class="title-timestamp">Week of {{ date_human }} — {{ time_human }}</p>
+
+  <p class="deck">
+    What changed in the AI tools landscape this week. Every shift in vendor offerings, open models, and best-tool recommendations — tracked and diffed automatically.
+  </p>
+
+  <nav class="section-nav" aria-label="Section navigation">
+    <div class="section-nav-inner" id="stickyNav">
+      <div class="nav-bar">
+        <a href="#this-week">This Week</a>
+        <span class="nav-divider">/</span>
+        <a href="#history">History</a>
+        <span class="nav-divider">/</span>
+        <a href="tools.html" class="back-link">Tools Reference</a>
+        <span class="nav-divider">/</span>
+        <a href="latest.html" class="back-link">Today's Brief</a>
+      </div>
+      <button class="nav-hamburger" id="navHamburger" aria-label="Open navigation">
+        <span class="nav-hamburger-label">◆ Navigate — <span class="active-name" id="activeName">This Week</span></span>
+        <span class="nav-hamburger-icon"><span></span><span></span><span></span></span>
+      </button>
+      <div class="nav-dropdown" id="navDropdown">
+        <a href="#this-week"><span class="nav-num">01</span>This Week</a>
+        <a href="#history"><span class="nav-num">02</span>History</a>
+        <a href="tools.html"><span class="nav-num">←</span>Tools Reference</a>
+        <a href="latest.html"><span class="nav-num">←</span>Today's Brief</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Summary block -->
+  <div class="summary-block">
+    <p class="summary-text">{{ changelog.summary }}</p>
+    <p class="trend-observation">{{ changelog.trend_observation }}</p>
+  </div>
+
+  <!-- 01 THIS WEEK'S CHANGES -->
+  <section id="this-week">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>This Week's Changes</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    {% if changelog.changes %}
+    <div class="changes-list">
+      {% for change in changelog.changes %}
+      <div class="change-card">
+
+        <!-- Signal icon -->
+        <div class="signal-icon signal-{{ change.signal }}">
+          {% if change.signal == 'up' %}↑
+          {% elif change.signal == 'down' %}↓
+          {% elif change.signal == 'new' %}+
+          {% elif change.signal == 'removed' %}−
+          {% else %}~{% endif %}
+        </div>
+
+        <!-- Meta -->
+        <div class="change-meta">
+          <span class="change-item">{{ change.item }}</span>
+          <span class="change-section">{{ change.section | replace('_', ' ') }}</span>
+          <span class="change-type-badge badge-{{ change.type }}">{{ change.type }}</span>
+        </div>
+
+        <!-- Detail -->
+        <div class="change-detail">{{ change.detail }}</div>
+
+      </div>
+      {% endfor %}
+    </div>
+
+    {% else %}
+    <div class="no-changes">
+      ◆ No significant changes detected this week
+    </div>
+    {% endif %}
+
+  </section>
+
+  <!-- 02 CHANGELOG HISTORY -->
+  <section id="history">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>History</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    {% if all_changelogs %}
+    <div class="history-list">
+      {% for entry in all_changelogs %}
+      <div class="history-item">
+        <span class="history-date">
+          {{ entry.date_human }}
+          <span class="history-count">{{ entry.changes | length }} changes</span>
+        </span>
+        <span class="history-summary">{{ entry.summary }}</span>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="no-changes">◆ History builds from next Monday onwards</div>
+    {% endif %}
+
+  </section>
+
+  <footer>
+    <div>ainews.mavenotics.com — AI Tools Changelog</div>
+    <div>Updated {{ date_human }}, {{ time_human }}</div>
+  </footer>
+
+</div>
+<script>
+  const nav        = document.getElementById('stickyNav');
+  const navWrap    = nav.closest('.section-nav');
+  const hamburger  = document.getElementById('navHamburger');
+  const dropdown   = document.getElementById('navDropdown');
+  const activeName = document.getElementById('activeName');
+  const sections   = ['this-week', 'history'];
+
+  const barLinks  = nav.querySelectorAll('.nav-bar a:not(.back-link)');
+  const dropLinks = nav.querySelectorAll('.nav-dropdown a');
+  const allLinks  = [...barLinks, ...dropLinks];
+
+  const sectionLabels = { 'this-week': 'This Week', 'history': 'History' };
+
+  const visObserver = new IntersectionObserver(([e]) => {
+    const isSticky = !e.isIntersecting;
+    nav.classList.toggle('visible', isSticky);
+    document.body.classList.toggle('nav-active', isSticky);
+  }, { threshold: 0 });
+  visObserver.observe(navWrap);
+
+  hamburger.addEventListener('click', () => {
+    const isOpen = dropdown.classList.toggle('open');
+    hamburger.classList.toggle('open', isOpen);
+    nav.classList.toggle('menu-open', isOpen);
+  });
+
+  dropLinks.forEach(a => {
+    a.addEventListener('click', () => {
+      dropdown.classList.remove('open');
+      hamburger.classList.remove('open');
+      nav.classList.remove('menu-open');
+    });
+  });
+
+  const sectionEls = sections.map(id => document.getElementById(id)).filter(Boolean);
+  const activeObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        allLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === `#${id}`));
+        if (activeName) activeName.textContent = sectionLabels[id] || id;
+      }
+    });
+  }, { rootMargin: '-15% 0px -80% 0px', threshold: 0 });
+  sectionEls.forEach(el => activeObserver.observe(el));
+</script>
+</body>
+</html>
