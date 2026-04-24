@@ -9,19 +9,40 @@
     :root { --ink: #1a1a1a; --accent: #c8341c; --paper: #f4efe6; --soft: #4a4540; }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { background: var(--paper); color: var(--ink); font-family: 'JetBrains Mono', monospace; min-height: 100vh; }
-    .wrap { max-width: 680px; margin: 0 auto; padding: 80px 32px; }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.4;
+      background-image: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.008) 2px, rgba(0,0,0,0.008) 3px);
+    }
+    .wrap { max-width: 680px; margin: 0 auto; padding: 80px 32px; position: relative; z-index: 1; }
     .label { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 16px; }
     h1 { font-family: 'Fraunces', serif; font-size: 56px; font-weight: 900; line-height: 0.95; letter-spacing: -0.03em; margin-bottom: 8px; }
-    .sub { font-size: 13px; color: var(--soft); margin-bottom: 48px; letter-spacing: 0.06em; }
+    .sub { font-size: 13px; color: var(--soft); margin-bottom: 40px; letter-spacing: 0.06em; }
+    .btn-group { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 40px; }
+    .btn { display: inline-block; padding: 14px 24px; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; font-weight: 700; transition: all 0.2s; white-space: nowrap; }
+    .btn-primary { background: var(--ink); color: var(--paper); border: 1px solid var(--ink); }
+    .btn-primary:hover { background: var(--accent); border-color: var(--accent); }
+    .btn-secondary { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
+    .btn-secondary:hover { background: var(--ink); color: var(--paper); }
+    .btn-accent { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+    .btn-accent:hover { background: var(--accent); color: var(--paper); }
     .divider { border: none; border-top: 1px solid var(--ink); margin-bottom: 32px; }
+    .archive-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--soft); margin-bottom: 16px; }
     ul { list-style: none; }
     li { border-bottom: 1px solid rgba(26,26,26,0.12); }
     li a { display: block; padding: 16px 0; font-size: 13px; color: var(--ink); text-decoration: none; letter-spacing: 0.06em; transition: color 0.2s; }
     li a:hover { color: var(--accent); }
     li a::before { content: '→ '; color: var(--accent); }
-    .latest-btn { display: inline-block; margin-bottom: 40px; padding: 14px 28px; background: var(--ink); color: var(--paper); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; font-weight: 700; transition: background 0.2s; }
-    .latest-btn:hover { background: var(--accent); }
-    @media (max-width: 480px) { .wrap { padding: 48px 20px; } h1 { font-size: 40px; } }
+    footer { margin-top: 48px; padding-top: 20px; border-top: 1px solid rgba(26,26,26,0.15); font-size: 10px; color: var(--soft); letter-spacing: 0.1em; text-transform: uppercase; }
+    @media (max-width: 480px) {
+      .wrap { padding: 48px 20px; }
+      h1 { font-size: 40px; }
+      .btn-group { flex-direction: column; }
+      .btn { text-align: center; }
+    }
   </style>
 </head>
 <body>
@@ -29,10 +50,21 @@
     <p class="label">◆ ainews.mavenotics.com</p>
     <h1>The State<br>of AI.</h1>
     <p class="sub">Daily builder briefs — weekdays, 6 AM AEST</p>
-    <a class="latest-btn" href="latest.html">Read Latest Issue →</a>
+
+    <div class="btn-group">
+      <a class="btn btn-primary" href="latest.html">Read Latest Issue →</a>
+      <a class="btn btn-secondary" href="tools.html">AI Tools Reference →</a>
+      <a class="btn btn-accent" href="changelog.html">Tools Changelog →</a>
+    </div>
+
     <hr class="divider">
+    <p class="archive-label">◆ Archive</p>
     <ul><li><a href="2026-04-24.html">Friday, 24 April 2026</a></li>
 <li><a href="2026-04-23.html">Thursday, 23 April 2026</a></li></ul>
+
+    <footer>
+      ainews.mavenotics.com · Built with Claude · Updated weekdays 6 AM AEST
+    </footer>
   </div>
 </body>
 </html>

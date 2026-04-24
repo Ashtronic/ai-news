@@ -1,0 +1,215 @@
+{
+  "ecosystem": [
+    {
+      "layer": "Core Models",
+      "google": "Gemini 2.5 Pro, Gemini 2.0 Flash",
+      "openai": "GPT-4o, o3, o4-mini",
+      "anthropic": "Claude 3.7 Sonnet, Claude 3.5 Haiku",
+      "meta": "Llama 3.3 70B, Llama 3.2",
+      "microsoft": "Phi-4, Phi-3.5",
+      "popularity": 98
+    },
+    {
+      "layer": "APIs / Platform",
+      "google": "Vertex AI, Google AI Studio",
+      "openai": "OpenAI API, Batch API",
+      "anthropic": "Anthropic API, Claude.ai Teams",
+      "meta": "Llama API (beta)",
+      "microsoft": "Azure OpenAI Service, Azure AI Foundry",
+      "popularity": 95
+    },
+    {
+      "layer": "Dev Tools",
+      "google": "Gemini Code Assist, Firebase Genkit",
+      "openai": "OpenAI Playground, Evals",
+      "anthropic": "Claude Workbench, Prompt Console",
+      "meta": "Llama Stack, torchtune",
+      "microsoft": "GitHub Copilot, Semantic Kernel",
+      "popularity": 88
+    },
+    {
+      "layer": "Assistants / Apps",
+      "google": "Gemini App, NotebookLM",
+      "openai": "ChatGPT, GPT Store",
+      "anthropic": "Claude.ai",
+      "meta": "Meta AI (WhatsApp, Instagram)",
+      "microsoft": "Microsoft Copilot, Bing Chat",
+      "popularity": 97
+    },
+    {
+      "layer": "Research Tools",
+      "google": "DeepMind Gemini Research, Google Scholar AI",
+      "openai": "Deep Research (ChatGPT Pro)",
+      "anthropic": "Claude Research Mode",
+      "meta": "FAIR Research Models",
+      "microsoft": "Microsoft Research AI, Copilot for Research",
+      "popularity": 72
+    },
+    {
+      "layer": "Creative / Media",
+      "google": "Imagen 3, Veo 2, MusicFX",
+      "openai": "DALL-E 3, Sora",
+      "anthropic": "-",
+      "meta": "Meta MovieGen, Emu Video",
+      "microsoft": "Microsoft Designer, Copilot Image Creator",
+      "popularity": 82
+    },
+    {
+      "layer": "Edge / On-device",
+      "google": "Gemini Nano, MediaPipe",
+      "openai": "-",
+      "anthropic": "-",
+      "meta": "Llama 3.2 1B/3B, PyTorch Mobile",
+      "microsoft": "Phi-4-mini, ONNX Runtime",
+      "popularity": 61
+    },
+    {
+      "layer": "Voice / Speech",
+      "google": "Google Cloud TTS, Chirp 2, NotebookLM Audio",
+      "openai": "Whisper, TTS API, GPT-4o Voice",
+      "anthropic": "-",
+      "meta": "SeamlessM4T, Voicebox",
+      "microsoft": "Azure Speech Services, Copilot Voice",
+      "popularity": 78
+    },
+    {
+      "layer": "Agent Frameworks",
+      "google": "Agent Development Kit (ADK), Vertex AI Agents",
+      "openai": "Responses API, Assistants API",
+      "anthropic": "Model Context Protocol (MCP)",
+      "meta": "Llama Stack Agents",
+      "microsoft": "AutoGen, Azure AI Agent Service",
+      "popularity": 80
+    }
+  ],
+  "open_models": [
+    {
+      "vendor": "Meta",
+      "models": "Llama 3.3 70B, Llama 3.2 (1B/3B/11B/90B), Llama 3.1 405B",
+      "license": "Llama Community License (custom open)",
+      "practical_use": "General chat, instruction following, RAG, on-device inference, fine-tuning base"
+    },
+    {
+      "vendor": "Google",
+      "models": "Gemma 3 (1B/4B/12B/27B), Gemma 2 9B/27B",
+      "license": "Gemma Terms of Use (permissive commercial)",
+      "practical_use": "Lightweight deployment, fine-tuning, on-device, academic research"
+    },
+    {
+      "vendor": "Mistral AI",
+      "models": "Mistral 7B, Mixtral 8x7B, Mistral Small 3.1, Mistral NeMo",
+      "license": "Apache 2.0 (base); commercial for larger variants",
+      "practical_use": "Efficient inference, enterprise RAG, self-hosted chat, European data-residency"
+    },
+    {
+      "vendor": "DeepSeek",
+      "models": "DeepSeek-V3, DeepSeek-R1, DeepSeek-Coder-V2",
+      "license": "MIT (R1, V3); custom for some variants",
+      "practical_use": "Coding, math reasoning, cost-efficient API alternative, chain-of-thought tasks"
+    },
+    {
+      "vendor": "Alibaba / Qwen",
+      "models": "Qwen2.5 (0.5B\u201372B), Qwen2.5-Coder, QwQ-32B",
+      "license": "Apache 2.0 (most sizes)",
+      "practical_use": "Multilingual (strong CJK), coding, math, edge deployment, fine-tuning"
+    },
+    {
+      "vendor": "Microsoft",
+      "models": "Phi-4 (14B), Phi-4-mini, Phi-3.5-MoE",
+      "license": "MIT",
+      "practical_use": "On-device inference, low-latency apps, educational tasks, edge AI, fine-tuning"
+    },
+    {
+      "vendor": "Cohere",
+      "models": "Command R+, Command R, Aya 23",
+      "license": "Commercial (API); some weights available",
+      "practical_use": "Enterprise RAG, multilingual (101 languages), tool use, grounded generation"
+    },
+    {
+      "vendor": "01.AI",
+      "models": "Yi-1.5 (6B/9B/34B)",
+      "license": "Apache 2.0",
+      "practical_use": "Long-context tasks (200K), bilingual (EN/ZH), cost-efficient self-hosting"
+    },
+    {
+      "vendor": "NovaSky / Berkeley",
+      "models": "Sky-T1-32B-Preview",
+      "license": "Apache 2.0",
+      "practical_use": "Reasoning, math, coding benchmarks, open research alternative to o1-class models"
+    },
+    {
+      "vendor": "TII (UAE)",
+      "models": "Falcon 2 (11B, 11B VLM)",
+      "license": "TII Falcon License (permissive)",
+      "practical_use": "Multimodal vision-language tasks, open research, sovereign AI deployments"
+    }
+  ],
+  "best_tools": [
+    {
+      "work_type": "Chat",
+      "best_closed": "ChatGPT (GPT-4o), Claude 3.7 Sonnet",
+      "best_open": "Llama 3.3 70B, Mistral Small 3.1",
+      "when_to_use": "Use closed for highest quality, nuance, and large context; use open when data privacy, cost control, or self-hosting are required"
+    },
+    {
+      "work_type": "Coding",
+      "best_closed": "GitHub Copilot (GPT-4o), Claude 3.7 Sonnet",
+      "best_open": "DeepSeek-Coder-V2, Qwen2.5-Coder 32B",
+      "when_to_use": "Use closed for IDE integration and autocomplete at scale; use open for air-gapped environments or cost-sensitive batch generation"
+    },
+    {
+      "work_type": "RAG",
+      "best_closed": "OpenAI API + embeddings, Cohere Command R+",
+      "best_open": "Llama 3.3 70B + Ollama, Mistral 7B + LangChain",
+      "when_to_use": "Use closed for production SLAs and managed vector search; use open when documents are sensitive or on-premise deployment is mandatory"
+    },
+    {
+      "work_type": "Agents",
+      "best_closed": "OpenAI Assistants API, Vertex AI Agents",
+      "best_open": "AutoGen + Phi-4, Llama Stack Agents",
+      "when_to_use": "Use closed for reliable tool use and managed orchestration; use open for custom workflows, cost reduction, and full control over agent logic"
+    },
+    {
+      "work_type": "Search",
+      "best_closed": "Perplexity Pro, ChatGPT with Search, Gemini with Grounding",
+      "best_open": "SearXNG + Llama 3, Ollama + Open WebUI (web plugin)",
+      "when_to_use": "Use closed for real-time cited web answers; use open for internal enterprise knowledge base search with privacy requirements"
+    },
+    {
+      "work_type": "Image",
+      "best_closed": "DALL-E 3, Midjourney v6.1, Imagen 3",
+      "best_open": "Stable Diffusion 3.5, FLUX.1 (Black Forest Labs)",
+      "when_to_use": "Use closed for highest quality and ease of use; use open for full control, custom fine-tuning, and commercial IP ownership"
+    },
+    {
+      "work_type": "Video",
+      "best_closed": "Sora (OpenAI), Veo 2 (Google), Kling 1.6",
+      "best_open": "Open-Sora, CogVideoX",
+      "when_to_use": "Use closed for production-quality short video generation; use open for research, custom pipelines, and no content policy restrictions"
+    },
+    {
+      "work_type": "Speech",
+      "best_closed": "OpenAI TTS / Whisper API, Azure Speech Services",
+      "best_open": "Whisper (local), Kokoro TTS, Coqui XTTS-v2",
+      "when_to_use": "Use closed for scalable managed transcription/synthesis; use open for offline processing, custom voice cloning, and sensitive audio data"
+    },
+    {
+      "work_type": "Edge",
+      "best_closed": "Gemini Nano (Android), Apple Intelligence Models",
+      "best_open": "Phi-4-mini, Llama 3.2 1B/3B, Gemma 3 1B",
+      "when_to_use": "Use closed for tightly integrated OS-level features; use open for custom embedded apps, IoT, and privacy-first mobile deployments"
+    },
+    {
+      "work_type": "Fine-tuning",
+      "best_closed": "OpenAI Fine-tuning API, Vertex AI Supervised Tuning",
+      "best_open": "Llama 3.1 8B + torchtune, Mistral 7B + Unsloth",
+      "when_to_use": "Use closed for managed, low-ops domain adaptation; use open for full model ownership, sensitive training data, and iterative experimentation"
+    },
+    {
+      "work_type": "Multimodal",
+      "best_closed": "GPT-4o, Gemini 2.5 Pro, Claude 3.7 Sonnet",
+      "best_open": "Llama 3.2 Vision 11B/90B, Qwen2.5-VL 72B",
+      "when_to_use": "Use closed for complex vision-language reasoning and document understanding; use open for self-hosted image analysis pipelines with data privacy needs"
+    }
+  ]
+}
