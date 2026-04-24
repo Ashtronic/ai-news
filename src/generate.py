@@ -215,12 +215,15 @@ def generate_changelog(current, previous, previous_date):
         "- signal: up/down for popularity, new/removed for additions/deletions, changed for content\n"
         "- trend_observation: one sharp insight about the pattern of changes this week\n"
         "- If no meaningful changes, return empty changes array and note in summary\n"
+        "- Keep detail field under 15 words per change\n"
+        "- Keep summary under 30 words\n"
+        "- Keep trend_observation under 20 words\n"
         "- Return ONLY valid JSON, no other text, no markdown fences"
     )
 
     message = client.messages.create(
         model="claude-sonnet-4-6",
-        max_tokens=3000,
+        max_tokens=6000,
         messages=[{"role": "user", "content": prompt}]
     )
 
