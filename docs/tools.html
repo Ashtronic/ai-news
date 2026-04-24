@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI Tools Reference — ainews.mavenotics.com</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,700;9..144,900&family=JetBrains+Mono:wght@400;500;700&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f4efe6;
+    --paper-deep: #ebe4d6;
+    --ink: #1a1a1a;
+    --ink-soft: #4a4540;
+    --rule: #2a2520;
+    --accent: #c8341c;
+    --accent-soft: #e85a3f;
+    --use-now: #2d6a3f;
+    --watch: #b87a1f;
+    --ignore: #6a6660;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter Tight', -apple-system, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.5;
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(200,52,28,0.04) 0%, transparent 40%),
+      radial-gradient(circle at 80% 90%, rgba(45,106,63,0.04) 0%, transparent 40%);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.4;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.008) 2px, rgba(0,0,0,0.008) 3px);
+    z-index: 1;
+  }
+
+  .container {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 48px 56px 80px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ============ TOPBAR ============ */
+  .topbar {
+    border-top: 6px double var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 16px 0;
+    margin-bottom: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .topbar-left { color: var(--accent); font-weight: 700; }
+  .topbar-right a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .topbar-right a:hover { color: var(--accent); }
+  .topbar-right a::before { content: '← '; }
+
+  /* ============ TITLE ============ */
+  .title-block {
+    padding: 36px 0 20px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 32px;
+    align-items: end;
+  }
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: clamp(48px, 7vw, 88px);
+    line-height: 0.92;
+    letter-spacing: -0.03em;
+  }
+  .title-meta {
+    text-align: right;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--ink-soft);
+    line-height: 1.8;
+    text-transform: uppercase;
+  }
+  .title-meta strong { display: block; color: var(--ink); font-size: 13px; margin-bottom: 4px; }
+
+  .title-timestamp {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink);
+    font-weight: 500;
+    padding: 18px 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 0;
+  }
+  .title-timestamp::before { content: '◆ '; color: var(--accent); }
+
+  .deck {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 20px;
+    line-height: 1.4;
+    color: var(--ink-soft);
+    max-width: 720px;
+    padding: 24px 0 0;
+  }
+
+  /* ============ NAV ============ */
+  .section-nav {
+    height: 48px;
+    margin-bottom: 48px;
+    margin-top: 28px;
+  }
+  .section-nav-inner {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: var(--paper);
+    border-bottom: 1px solid var(--rule);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    transform: translateY(-100%);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .section-nav-inner.visible {
+    transform: translateY(0);
+    box-shadow: 0 3px 20px rgba(26,26,26,0.10);
+  }
+  .nav-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 48px;
+    padding: 0 24px;
+    gap: 2px;
+  }
+  .nav-bar a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    padding: 5px 11px;
+    font-weight: 500;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: color 0.15s;
+  }
+  .nav-bar a:hover { color: var(--accent); }
+  .nav-bar a.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 700; }
+  .nav-bar a.back-link { color: var(--accent); border-left: 1px solid rgba(42,37,32,0.2); margin-left: 8px; padding-left: 16px; }
+  .nav-bar a.back-link::before { content: '← '; }
+  .nav-bar .nav-divider { color: var(--ink-soft); opacity: 0.2; user-select: none; font-size: 9px; }
+
+  .nav-hamburger {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    height: 48px;
+    padding: 0 20px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    width: 100%;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .nav-hamburger-label { font-weight: 700; }
+  .nav-hamburger-label .active-name { color: var(--accent); }
+  .nav-hamburger-icon { display: flex; flex-direction: column; gap: 4px; width: 18px; }
+  .nav-hamburger-icon span { display: block; height: 1.5px; background: var(--ink); transition: transform 0.25s, opacity 0.25s; }
+  .nav-hamburger.open .nav-hamburger-icon span:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
+  .nav-hamburger.open .nav-hamburger-icon span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open .nav-hamburger-icon span:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
+  .nav-dropdown { display: none; flex-direction: column; background: var(--paper); border-top: 1px solid rgba(42,37,32,0.15); padding: 8px 0 12px; }
+  .nav-dropdown.open { display: flex; }
+  .nav-dropdown a { color: var(--ink-soft); text-decoration: none; padding: 11px 20px; font-weight: 500; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; border-left: 3px solid transparent; transition: color 0.15s, border-color 0.15s; }
+  .nav-dropdown a:hover { color: var(--accent); }
+  .nav-dropdown a.active { color: var(--accent); border-left-color: var(--accent); font-weight: 700; background: rgba(200,52,28,0.04); }
+  .nav-dropdown a .nav-num { color: var(--accent); margin-right: 10px; opacity: 0.6; }
+
+  @media (max-width: 860px) {
+    .nav-bar { display: none; }
+    .nav-hamburger { display: flex; }
+    .section-nav-inner.menu-open { box-shadow: 0 8px 28px rgba(26,26,26,0.13); }
+  }
+
+  body.nav-active .container { padding-top: 72px; transition: padding-top 0.3s ease; }
+  section { scroll-margin-top: 72px; }
+
+  /* ============ SECTIONS ============ */
+  section { margin-bottom: 56px; }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--accent); font-weight: 700; letter-spacing: 0.1em; }
+  .section-num::before { content: '§ '; }
+  h2 { font-family: 'Fraunces', serif; font-weight: 700; font-size: 32px; letter-spacing: -0.02em; line-height: 1.1; }
+  .section-rule { flex: 1; height: 1px; background: var(--rule); margin-bottom: 8px; }
+
+  /* ============ TABLES ============ */
+  .table-wrap { overflow-x: auto; border: 1px solid var(--rule); background: rgba(255,255,255,0.3); -webkit-overflow-scrolling: touch; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  thead { background: var(--rule); color: var(--paper); }
+  th { text-align: left; padding: 14px 16px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 500; }
+  td { padding: 16px; border-bottom: 1px solid rgba(42,37,32,0.12); vertical-align: top; line-height: 1.5; }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: rgba(200,52,28,0.04); }
+  td.layer { font-family: 'Fraunces', serif; font-weight: 700; font-size: 15px; color: var(--accent); white-space: nowrap; }
+  td.vendor-name { font-family: 'Fraunces', serif; font-weight: 700; font-size: 15px; white-space: nowrap; }
+  td.work-type { font-family: 'Fraunces', serif; font-weight: 700; font-size: 15px; white-space: normal; min-width: 120px; }
+
+  /* ============ BADGES ============ */
+  .badge { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; border: 1px solid currentColor; white-space: nowrap; }
+  .badge-cat { color: var(--ink-soft); background: var(--paper-deep); border-color: var(--ink-soft); }
+  .badge-open { color: var(--use-now); background: rgba(45,106,63,0.08); }
+  .badge-closed { color: var(--watch); background: rgba(184,122,31,0.08); }
+  .badge-mixed { color: var(--accent); background: rgba(200,52,28,0.08); }
+
+  /* ============ POPULARITY BARS ============ */
+  table.ecosystem td:last-child { width: 130px; }
+  .bar-wrap { position: relative; background: var(--paper-deep); height: 22px; border: 1px solid var(--rule); overflow: hidden; min-width: 90px; }
+  .bar { background: var(--accent); height: 100%; }
+  .bar-val { position: absolute; top: 50%; right: 8px; transform: translateY(-50%); font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; color: var(--paper); }
+
+  /* ============ TABLE NOTES ============ */
+  .table-note { margin-top: 14px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); line-height: 1.8; }
+  .table-note::before { content: '※ '; color: var(--accent); }
+
+  /* ============ METHODOLOGY BOX ============ */
+  .methodology {
+    margin-top: 16px;
+    padding: 20px 24px;
+    border: 1px solid var(--rule);
+    background: rgba(255,255,255,0.3);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    line-height: 2;
+  }
+  .methodology-title { color: var(--accent); font-weight: 700; font-size: 11px; margin-bottom: 8px; display: block; }
+
+  /* ============ FOOTER ============ */
+  footer { margin-top: 72px; padding-top: 24px; border-top: 6px double var(--rule); font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-soft); display: flex; justify-content: space-between; }
+
+  /* ============ ANIMATIONS ============ */
+  @keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+  .title-block, .deck, section, footer { animation: rise 0.6s ease-out backwards; }
+  section:nth-of-type(1) { animation-delay: 0.1s; }
+  section:nth-of-type(2) { animation-delay: 0.2s; }
+  section:nth-of-type(3) { animation-delay: 0.3s; }
+  footer { animation-delay: 0.4s; }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 1024px) { .container { padding: 40px 36px 72px; } body.nav-active .container { padding-top: 68px; } }
+  @media (max-width: 768px) {
+    .container { padding: 20px 16px 60px; }
+    body.nav-active .container { padding-top: 68px; }
+    .topbar { flex-direction: column; gap: 4px; font-size: 10px; }
+    .title-block { grid-template-columns: 1fr; gap: 12px; padding: 24px 0 16px; }
+    h1 { font-size: clamp(44px, 13vw, 64px); }
+    .title-meta { text-align: left; font-size: 10px; }
+    .title-timestamp { font-size: 10px; padding: 12px 0; }
+    .deck { font-size: 17px; }
+    h2 { font-size: 24px; }
+    table { min-width: 560px; }
+    table.ecosystem { min-width: 700px; }
+    th { padding: 10px 12px; font-size: 9px; }
+    td { padding: 12px; font-size: 13px; }
+    td.layer, td.vendor-name, td.work-type { font-size: 13px; }
+    footer { flex-direction: column; gap: 6px; font-size: 9px; }
+  }
+  @media (max-width: 380px) { .container { padding: 16px 12px 48px; } h1 { font-size: 40px; } }
+  @media print {
+    body { background: white; }
+    body::before { display: none; }
+    .section-nav-inner { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="topbar">
+    <div class="topbar-left">◆ AI Tools Reference — ainews.mavenotics.com</div>
+    <div class="topbar-right"><a href="latest.html">Back to Today's Brief</a></div>
+  </div>
+
+  <div class="title-block">
+    <h1>AI Tools<br>Reference.</h1>
+    <div class="title-meta">
+      <strong>Reference Guide</strong>
+      Last updated<br>
+      Friday, 24 April 2026<br>
+      ainews.mavenotics.com
+    </div>
+  </div>
+
+  <p class="title-timestamp">Last updated — Friday, 24 April 2026, 1:37 PM AEST</p>
+
+  <p class="deck">
+    A structured reference map of the AI vendor landscape, open model ecosystem, and best tools by work type. Updated every Monday.
+  </p>
+
+  <nav class="section-nav" aria-label="Section navigation">
+    <div class="section-nav-inner" id="stickyNav">
+      <div class="nav-bar">
+        <a href="#ecosystem">Major Vendors</a>
+        <span class="nav-divider">/</span>
+        <a href="#open">Open Models</a>
+        <span class="nav-divider">/</span>
+        <a href="#tools">Best by Work</a>
+        <span class="nav-divider">/</span>
+        <a href="latest.html" class="back-link">Today's Brief</a>
+      </div>
+      <button class="nav-hamburger" id="navHamburger" aria-label="Open navigation">
+        <span class="nav-hamburger-label">◆ Navigate — <span class="active-name" id="activeName">Major Vendors</span></span>
+        <span class="nav-hamburger-icon"><span></span><span></span><span></span></span>
+      </button>
+      <div class="nav-dropdown" id="navDropdown">
+        <a href="#ecosystem"><span class="nav-num">01</span>Major Vendors</a>
+        <a href="#open"><span class="nav-num">02</span>Open Models</a>
+        <a href="#tools"><span class="nav-num">03</span>Best by Work</a>
+        <a href="latest.html"><span class="nav-num">←</span>Today's Brief</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 01 MAJOR AI VENDORS -->
+  <section id="ecosystem">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Major AI Vendors</h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="table-wrap">
+      <table class="ecosystem">
+        <thead>
+          <tr>
+            <th>Capability Layer</th>
+            <th>Google</th>
+            <th>OpenAI</th>
+            <th>Anthropic</th>
+            <th>Meta</th>
+            <th>Microsoft</th>
+            <th>Popularity</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+          <tr>
+            <td class="layer">Core Models</td>
+            <td>Gemini 2.0 Flash, Gemini 2.5 Pro</td>
+            <td>GPT-4o, o3</td>
+            <td>Claude 3.7 Sonnet, Claude 3.5 Haiku</td>
+            <td>Llama 3.3 70B, Llama 3.2</td>
+            <td>Phi-4, Phi-3.5</td>
+            <td>
+              <div class="bar-wrap">
+                <div class="bar" style="width:98%"></div>
+                <span class="bar-val">98%</span>
+              </div>
+            </td>
+          </tr>
+          
+          <tr>
+            <td class="layer">APIs / Platform</td>
+            <td>Vertex AI, Google AI Studio</td>
+            <td>OpenAI API, Batch API</td>
+            <td>Claude API, Bedrock integration</td>
+            <td>Llama API (beta)</td>
+            <td>Azure OpenAI Service, Azure AI Foundry</td>
+            <td>
+              <div class="bar-wrap">
+                <div class="bar" style="width:95%"></div>
+                <span class="bar-val">95%</span>
+              </div>
+            </td>
+          </tr>
+          
+          <tr>
+            <td class="layer">Dev Tools</td>
+            <td>Gemini Code Assist, Firebase Genkit</td>
+            <td>Assistants API, Evals framework</td>
+            <td>Claude tool use, Workbench</td>
+            <td>Llama Stack, Meta AI SDK</td>
+            <td>Semantic Kernel, Prompt Flow</td>
+            <td>
+              <div class="bar-wrap">
+                <div class="bar" style="width:88%"></div>
+                <span class="bar-val">88%</span>
+              </div>
+            </td>
+          </tr>
+          
+          <tr>
+            <td class="layer">Assistants / Apps</td>
+            <td>Gemini App, NotebookLM</td>
+            <td>ChatGPT, ChatGPT Team</td>
+            <td>Claude.ai, Claude for Work</td>
+            <td>Meta AI (WhatsApp/Instagram)</td>
+            <td>Microsoft Copilot, Copilot 365</td>
+            <td>
+              <div class="bar-wrap">
+                <div class="bar" style="width:97%"></div>
+                <span class="bar-val">97%</span>
+              </div>
+            </td>
+          </tr>
+          
+          <tr>
+            <td class="layer">Research Tools</td>
+            <td>NotebookLM Plus, Deep Research</td>
+            <td>Deep Research (ChatGPT Pro)</td>
+            <td>Claude Research mode</td>
+            <td>-</td>
+            <td>Copilot Research mode</td>
+            <td>
+              <div class="bar-wrap">
+                <div class="bar" style="width:72%"></div>
+                <span class="bar-val">72%</span>
+              </div>
+            </td>
+          </tr>
+          
+          <tr>
+            <td class="layer">Creative / Media</td>
+            <td>Imagen 3, Veo 2</td>
+            <td>DALL-E 3, Sora</td>
+            <td>-</td>
+            <td>Emu Video, Emu Image</td>
+            <td>Designer, Copilot Image Creator</td>
+            <td>
+              <div class="bar-wrap">
+                <div class="bar" style="width:82%"></div>
+                <span class="bar-val">82%</span>
+              </div>
+            </td>
+          </tr>
+          
+          <tr>
+            <td class="layer">Edge / On-device</td>
+            <td>Gemini Nano, MediaPipe LLM</td>
+            <td>-</td>
+            <td>-</td>
+            <td>Llama 3.2 1B/3B, MobileLLM</td>
+            <td>Phi-3 Mini, Phi-3.5 Mini</td>
+            <td>
+              <div class="bar-wrap">
+                <div class="bar" style="width:61%"></div>
+                <span class="bar-val">61%</span>
+              </div>
+            </td>
+          </tr>
+          
+          <tr>
+            <td class="layer">Voice / Speech</td>
+            <td>Gemini Live, Google TTS HD</td>
+            <td>Realtime API, Voice Mode</td>
+            <td>-</td>
+            <td>SeamlessM4T v2</td>
+            <td>Azure Speech, Copilot Voice</td>
+            <td>
+              <div class="bar-wrap">
+                <div class="bar" style="width:74%"></div>
+                <span class="bar-val">74%</span>
+              </div>
+            </td>
+          </tr>
+          
+          <tr>
+            <td class="layer">Agent Frameworks</td>
+            <td>Agent Development Kit, Vertex AI Agents</td>
+            <td>Responses API, Agents SDK</td>
+            <td>Claude + MCP support</td>
+            <td>Llama Stack Agents</td>
+            <td>AutoGen, Semantic Kernel Agents</td>
+            <td>
+              <div class="bar-wrap">
+                <div class="bar" style="width:79%"></div>
+                <span class="bar-val">79%</span>
+              </div>
+            </td>
+          </tr>
+          
+        </tbody>
+      </table>
+    </div>
+    <div class="methodology">
+      <span class="methodology-title">◆ Popularity Score Methodology</span>
+      Composite of four signals weighted equally:<br>
+      1. API call volume and developer adoption rate<br>
+      2. End-user traffic and app installs (where public)<br>
+      3. GitHub stars and open source community activity<br>
+      4. Developer forum mentions and job posting frequency<br>
+      Scored 0–100% relative to all vendors within each capability layer.<br>
+      Regenerated weekly every Monday. Last reviewed Friday, 24 April 2026.
+    </div>
+  </section>
+
+  <!-- 02 OPEN MODEL VENDORS -->
+  <section id="open">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Open Model Vendors</h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Vendor</th>
+            <th>Models</th>
+            <th>License</th>
+            <th>Practical Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+          <tr>
+            <td class="vendor-name">Meta</td>
+            <td>Llama 3.3 70B, Llama 3.2 11B/90B Vision, Llama 3.1 405B</td>
+            <td><span class="badge badge-cat">Llama Community License (custom open)</span></td>
+            <td>General chat, RAG, fine-tuning, vision tasks; broad hardware support</td>
+          </tr>
+          
+          <tr>
+            <td class="vendor-name">Google</td>
+            <td>Gemma 3 2B/9B/27B, Gemma 2 2B</td>
+            <td><span class="badge badge-cat">Gemma Terms of Use (permissive commercial)</span></td>
+            <td>Edge deployment, fine-tuning, instruction following, on-device inference</td>
+          </tr>
+          
+          <tr>
+            <td class="vendor-name">Mistral AI</td>
+            <td>Mistral 7B v0.3, Mixtral 8x7B, Mistral Small 3.1</td>
+            <td><span class="badge badge-cat">Apache 2.0 (base), custom (instruct)</span></td>
+            <td>Efficient inference, European compliance, coding, multilingual tasks</td>
+          </tr>
+          
+          <tr>
+            <td class="vendor-name">DeepSeek</td>
+            <td>DeepSeek-V3, DeepSeek-R1, DeepSeek-Coder-V2</td>
+            <td><span class="badge badge-cat">MIT (R1, Coder), DeepSeek License (V3)</span></td>
+            <td>Advanced reasoning, coding, math; strong benchmark performance at low cost</td>
+          </tr>
+          
+          <tr>
+            <td class="vendor-name">Alibaba / Qwen</td>
+            <td>Qwen2.5 72B/14B/7B, Qwen2.5-Coder 32B, QwQ-32B</td>
+            <td><span class="badge badge-cat">Apache 2.0 (most variants)</span></td>
+            <td>Multilingual (especially Chinese/English), coding, reasoning, long-context tasks</td>
+          </tr>
+          
+          <tr>
+            <td class="vendor-name">Microsoft</td>
+            <td>Phi-4 14B, Phi-3.5 Mini 3.8B, Phi-3.5 MoE</td>
+            <td><span class="badge badge-cat">MIT</span></td>
+            <td>Edge/mobile inference, low-resource environments, reasoning-focused small models</td>
+          </tr>
+          
+          <tr>
+            <td class="vendor-name">Cohere</td>
+            <td>Command R+, Command R, Aya Expanse</td>
+            <td><span class="badge badge-cat">CC-BY-NC (research), commercial license available</span></td>
+            <td>Enterprise RAG, multilingual retrieval, grounded generation, tool use</td>
+          </tr>
+          
+          <tr>
+            <td class="vendor-name">01.AI / Yi</td>
+            <td>Yi-1.5 34B, Yi-1.5 9B</td>
+            <td><span class="badge badge-cat">Apache 2.0</span></td>
+            <td>Long-context processing (200K tokens), bilingual Chinese/English tasks</td>
+          </tr>
+          
+          <tr>
+            <td class="vendor-name">TII (UAE)</td>
+            <td>Falcon 3 7B/10B, Falcon 180B</td>
+            <td><span class="badge badge-cat">Apache 2.0 (Falcon 3), custom (180B)</span></td>
+            <td>Research, multilingual, open sovereign AI applications</td>
+          </tr>
+          
+        </tbody>
+      </table>
+    </div>
+    <p class="table-note">Includes models actively used or relevant as of Friday, 24 April 2026. Experimental or pre-release models excluded.</p>
+  </section>
+
+  <!-- 03 BEST TOOLS BY WORK TYPE -->
+  <section id="tools">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Best Tools by AI Work Type</h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>AI Work Type</th>
+            <th>Best Closed (Speed / Quality)</th>
+            <th>Best Open (Control / Cost)</th>
+            <th>When to Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+          <tr>
+            <td class="work-type">Chat</td>
+            <td>ChatGPT (GPT-4o), Claude 3.7 Sonnet</td>
+            <td>Llama 3.3 70B, Qwen2.5 72B</td>
+            <td>Use closed for highest quality and breadth; open for privacy, self-hosting, or cost control</td>
+          </tr>
+          
+          <tr>
+            <td class="work-type">Coding</td>
+            <td>Claude 3.7 Sonnet, GPT-4o (via Cursor/Copilot)</td>
+            <td>DeepSeek-Coder-V2, Qwen2.5-Coder 32B</td>
+            <td>Use closed for complex multi-file refactoring; open for air-gapped or IP-sensitive codebases</td>
+          </tr>
+          
+          <tr>
+            <td class="work-type">RAG</td>
+            <td>Claude 3.7 Sonnet, Gemini 2.0 Flash</td>
+            <td>Command R+, Llama 3.3 70B</td>
+            <td>Use closed for high-accuracy enterprise retrieval; open for on-prem data compliance</td>
+          </tr>
+          
+          <tr>
+            <td class="work-type">Agents</td>
+            <td>OpenAI Agents SDK + GPT-4o, Vertex AI Agents</td>
+            <td>AutoGen + Llama 3.3, Llama Stack Agents</td>
+            <td>Use closed for production reliability and tool ecosystem; open for full control and auditability</td>
+          </tr>
+          
+          <tr>
+            <td class="work-type">Search</td>
+            <td>Perplexity Pro, ChatGPT Deep Research</td>
+            <td>SearXNG + Llama 3.3, AnythingLLM</td>
+            <td>Use closed for real-time web grounding; open for private intranet or document search</td>
+          </tr>
+          
+          <tr>
+            <td class="work-type">Image</td>
+            <td>DALL-E 3 (OpenAI), Imagen 3 (Google)</td>
+            <td>Stable Diffusion 3.5, FLUX.1 (Black Forest Labs)</td>
+            <td>Use closed for ease and API integration; open for unlimited generation, custom fine-tuning</td>
+          </tr>
+          
+          <tr>
+            <td class="work-type">Video</td>
+            <td>Sora (OpenAI), Veo 2 (Google), Runway Gen-3</td>
+            <td>CogVideoX, Wan2.1 (Alibaba)</td>
+            <td>Use closed for highest cinematic quality; open for local generation and commercial licensing flexibility</td>
+          </tr>
+          
+          <tr>
+            <td class="work-type">Speech</td>
+            <td>OpenAI Realtime API, Azure Speech, ElevenLabs</td>
+            <td>Whisper large-v3, Coqui XTTS-v2</td>
+            <td>Use closed for low-latency production voice apps; open for offline, on-prem, or high-volume transcription</td>
+          </tr>
+          
+          <tr>
+            <td class="work-type">Edge</td>
+            <td>Gemini Nano (Android), Apple Intelligence models</td>
+            <td>Phi-3.5 Mini, Llama 3.2 1B/3B, Gemma 3 2B</td>
+            <td>Use closed for seamless OS integration; open for custom embedded, IoT, or privacy-first mobile deployment</td>
+          </tr>
+          
+          <tr>
+            <td class="work-type">Fine-tuning</td>
+            <td>OpenAI Fine-tuning API (GPT-4o mini), Vertex AI tuning</td>
+            <td>Llama 3.3 + Axolotl/Unsloth, Mistral 7B + TRL</td>
+            <td>Use closed for fast iteration without infrastructure; open for full model ownership and data privacy</td>
+          </tr>
+          
+          <tr>
+            <td class="work-type">Multimodal</td>
+            <td>GPT-4o, Gemini 2.5 Pro, Claude 3.7 Sonnet</td>
+            <td>Llama 3.2 90B Vision, Qwen2.5-VL 72B</td>
+            <td>Use closed for best-in-class image+text+audio reasoning; open for self-hosted vision pipelines</td>
+          </tr>
+          
+        </tbody>
+      </table>
+    </div>
+    <p class="table-note">Closed = prioritises performance and ease of use. Open = prioritises control and cost. Updated weekly.</p>
+  </section>
+
+  <footer>
+    <div>ainews.mavenotics.com — AI Tools Reference</div>
+    <div>Updated Friday, 24 April 2026, 1:37 PM AEST</div>
+  </footer>
+
+</div>
+<script>
+  const nav        = document.getElementById('stickyNav');
+  const navWrap    = nav.closest('.section-nav');
+  const hamburger  = document.getElementById('navHamburger');
+  const dropdown   = document.getElementById('navDropdown');
+  const activeName = document.getElementById('activeName');
+  const sections   = ['ecosystem', 'open', 'tools'];
+
+  const barLinks  = nav.querySelectorAll('.nav-bar a:not(.back-link)');
+  const dropLinks = nav.querySelectorAll('.nav-dropdown a');
+  const allLinks  = [...barLinks, ...dropLinks];
+
+  const sectionLabels = {
+    ecosystem: 'Major Vendors',
+    open:      'Open Models',
+    tools:     'Best by Work',
+  };
+
+  const visObserver = new IntersectionObserver(([e]) => {
+    const isSticky = !e.isIntersecting;
+    nav.classList.toggle('visible', isSticky);
+    document.body.classList.toggle('nav-active', isSticky);
+  }, { threshold: 0 });
+  visObserver.observe(navWrap);
+
+  hamburger.addEventListener('click', () => {
+    const isOpen = dropdown.classList.toggle('open');
+    hamburger.classList.toggle('open', isOpen);
+    nav.classList.toggle('menu-open', isOpen);
+  });
+
+  dropLinks.forEach(a => {
+    a.addEventListener('click', () => {
+      dropdown.classList.remove('open');
+      hamburger.classList.remove('open');
+      nav.classList.remove('menu-open');
+    });
+  });
+
+  const sectionEls = sections.map(id => document.getElementById(id)).filter(Boolean);
+  const activeObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        allLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === `#${id}`));
+        if (activeName) activeName.textContent = sectionLabels[id] || id;
+      }
+    });
+  }, { rootMargin: '-15% 0px -80% 0px', threshold: 0 });
+  sectionEls.forEach(el => activeObserver.observe(el));
+</script>
+</body>
+</html>
